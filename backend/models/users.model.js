@@ -11,14 +11,13 @@ const users_table = `CREATE TABLE IF NOT EXISTS users (
 )`;
 
 
-export const createUsersTable = () => {
-    db.query(users_table, (err, result) => {
-        if (err){
-            throw err;
-        }
+export const createUsersTable = async () => {
+    try{
+        await db.query(users_table);
         console.log('Table created');
-    });
+    } catch (err) {
+        console.log(err);
+    }
 }
 
 export default createUsersTable;
-
