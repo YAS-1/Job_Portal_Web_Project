@@ -1,0 +1,68 @@
+# Backend Testing Guide
+
+## Setting Up Jest for Testing
+
+1. **Install Jest**:
+   Run the following command in the backend directory to install Jest:
+   ```
+   npm install --save-dev jest
+   ```
+
+2. **Configure Jest**:
+   Add a test script in your `package.json`:
+   ```json
+   "scripts": {
+       "test": "jest"
+   }
+   ```
+
+3. **Create a Test Directory**:
+   Create a `__tests__` directory in the backend folder to store your test files.
+
+## Writing Test Cases
+
+1. **Create a Test File**:
+   For example, create a file named `auth.controller.test.js` in the `__tests__` directory.
+
+2. **Write Test Cases**:
+   Use Jest's testing functions to write your test cases. Here's an example for the `register` function:
+   ```javascript
+   import { register } from '../controllers/auth.controller.js';
+
+   test('should register a new user', async () => {
+       const req = {
+           body: {
+               email: 'test@example.com',
+               password: 'password123',
+               role: 'job_seeker',
+               name: 'Test User',
+               contact: '1234567890'
+           }
+       };
+       const res = {
+           status: jest.fn().mockReturnThis(),
+           json: jest.fn()
+       };
+
+       await register(req, res);
+       expect(res.status).toHaveBeenCalledWith(201);
+       expect(res.json).toHaveBeenCalledWith({ message: "User registered successfully" });
+   });
+   ```
+
+## Running Tests
+
+1. **Run Tests**:
+   Use the following command to run your tests:
+   ```
+   npm test
+   ```
+
+2. **Check Results**:
+   Review the output in the terminal to see if your tests passed or failed.
+
+## Additional Tips
+
+- Write tests for all critical functions in your controllers and models.
+- Use mocking for database calls to isolate tests.
+- Regularly run tests as you make changes to ensure everything works as expected.
