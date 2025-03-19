@@ -1,0 +1,36 @@
+# Database Overview and Next Steps
+
+## Current Setup
+- The MySQL database connection is configured in `config/db.config.js`.
+- The `users` table is created in `models/users.model.js` if it does not already exist.
+
+## Next Steps
+1. **Create Additional Tables**:
+   - If your application requires more tables (e.g., for job postings, applications, etc.), define the SQL queries in new model files similar to `users.model.js`.
+
+2. **Implement Database Queries**:
+   - Add functions in your model files to handle CRUD operations for the `users` table and any additional tables you create.
+   - Example functions could include:
+     - `getUserById(id)`
+     - `updateUser(id, data)`
+     - `deleteUser(id)`
+
+3. **Testing Database Queries**:
+   - Write unit tests for your database queries to ensure they work as expected.
+   - Use Jest or another testing framework to create tests for your model functions.
+
+4. **Environment Variables**:
+   - Ensure that your `.env` file contains the correct database credentials:
+     ```
+     HOST=your_database_host
+     USER=your_database_user
+     PASSWORD=your_database_password
+     PORT=your_database_port
+     DATABASE=your_database_name
+     ```
+
+5. **Database Migration**:
+   - Consider using a migration tool (like Sequelize or Knex) for managing database schema changes in a more structured way.
+
+## Conclusion
+You are now set to work on the database section of your project. If you need assistance with specific queries or table structures, feel free to ask!
