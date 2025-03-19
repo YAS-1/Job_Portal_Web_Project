@@ -1,22 +1,24 @@
 import db from "../config/db.config.js";
 
+//Creating users table
 const users_table = `CREATE TABLE IF NOT EXISTS users (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  email VARCHAR(255) UNIQUE NOT NULL,
-  password VARCHAR(255) NOT NULL, -- Hashed with bcrypt
-  role ENUM('employer', 'job_seeker', 'admin') NOT NULL,
-  name VARCHAR(255) NOT NULL,
-  contact VARCHAR(20),
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    user_id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(255) NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    roles SET('jobseeker', 'employer', 'admin') NOT NULL,
+    otp_code VARCHAR(6) NULL,
+    otp_expires TIMESTAMP NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 )`;
 
 
 export const createUsersTable = async () => {
     try{
         await db.query(users_table);
-        console.log('Table created');
+        console.log('Users Table created');
     } catch (err) {
-        console.log(err);
+        console.log(`Error in creating users table: ${err}`);
     }
 }
 

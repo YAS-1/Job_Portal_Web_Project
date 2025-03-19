@@ -4,6 +4,9 @@ import dotenv from "dotenv";
 import db from "./config/db.config.js";
 
 import { createUsersTable } from "./models/users.model.js";
+import { createJobsTable } from "./models/job.model.js";
+import { createApplicationsTable } from "./models/application.model.js";
+
 import AuthRouter from "./routes/auth.routes.js";
 
 
@@ -21,4 +24,6 @@ app.use("/api/auth", AuthRouter);
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
     createUsersTable();
+    createJobsTable();
+    createApplicationsTable();
 });

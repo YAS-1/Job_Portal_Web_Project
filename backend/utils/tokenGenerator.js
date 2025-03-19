@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
 
 export const generateTokenAndSetCookie = (userId, res) =>{
+    //Generate a JWT that expires in 15days
     const token = jwt.sign({userId}, process.env.JWT_SECRET, { // the sign function takes in 3 parameters ie; payload, secret--> which is a secret key, options
         expiresIn: '15d',
     })
