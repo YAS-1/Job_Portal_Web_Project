@@ -49,7 +49,7 @@ export const login = async (res, req) => {
         const [user] = await db.query("SELECT * FROM users WHERE email = ?", [email]);
 
         if(user.length === 0){
-            return res.status(400).json({message: "User not found"});
+            return res.status(400).json({message: "Error finding user"});
         }
         //Comparing the password entered by the user with the hashed password stored in the database
         const isPasswordMatch = await bcrypt.compare(password, user.password);
@@ -94,7 +94,7 @@ export const forgotPassword = async (req, res) => {
         const [user] = await db.query("SELECT * FROM users WHERE email = ?", [email]);
 
         if(!user.length){
-            return res.status(400).json({message: "User not found"});
+            return res.status(400).json({message: "Error finding user"});
         }
 
         //generating the OTP code
@@ -114,3 +114,58 @@ export const forgotPassword = async (req, res) => {
     }
 };
 
+
+//Verifying the OTP code
+export const verifyOTP = async (req, res) => {
+    try {
+        const {email, otp} = req.body; // getting the user email and OTP code from the request body
+        if(!email || !otp){
+            return res.status(400).json({message: "Please enter your email and OTP code"});
+        }
+
+        //getting the user details from the database
+        const [user] = await db.query("SELECT * FROM users WHERE email = ? AND otp_code = ?", [email, otp]);
+        if(!user.length){
+            return res.status(400).json({message: "Invalid OTP code"});
+        }
+
+        //checking if the OTP code has expired
+        const {otp_expires} = user[0];
+        if(new Date() > new Date(otp_expires)){
+            return res.status(400).json({message: "OTP code has expired"});
+        }
+        res.status(200).json({message: "OTP code verified successfully"});
+
+    } catch (error) {
+        console.log(`Error in verifying OTP: ${error}`);
+        res.status(500).json({message: "Error in verifying OTP"});
+    }
+};
+
+
+//Resetting the password
+export const resetPassword = async (req, res) => {
+    try {
+        const {email, newPassword} = req.body; // getting the user email and new password from the request body
+        if(!email || !newPassword){
+            return res.status(400).json({message: "Please enter your email and new password"});
+        }
+
+        //getting the user details from the database
+        const[user] = await db.query("SELECT * FROM users WHERE email = ?", [email]);
+        if(!user.length){
+            return res.status(400).json({message: "Error finding user"});
+        }
+        //hashing the new password
+        const salt = await bcrypt.genSalt(10); //generating a salt
+        const hashedPassword = await bcrypt.hash(newPassword, salt); //hashing the new password by applying the generated salt
+
+        //updating the user details in the database
+        await db.query("UPDATE users SET password = ?, otp_code = NULL, otp_expires = NULL WHERE email = ?", [hashedPassword, email]);
+        res.status(200).json({message: "Password reset successfully. Please login with your new password"});
+        
+    } catch (error) {
+        console.log(`Error in resetting password: ${error}`);
+        res.status(500).json({message: "Error in resetting password"});
+    }
+};
