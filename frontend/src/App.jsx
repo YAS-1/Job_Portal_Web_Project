@@ -1,15 +1,15 @@
-import { useState } from 'react'
-import viteLogo from '/vite.svg'
+import { useEffect, useState } from 'react'
+import HomePage from './pages/home';
 import './App.css'
 
 function App() {
 
-
   return (
     <>
-
+      <HomePage/>
+      
     </>
   )
 }
 
-export default App
+export default App;
