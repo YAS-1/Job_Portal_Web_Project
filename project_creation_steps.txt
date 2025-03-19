@@ -1,0 +1,37 @@
+# Project Creation Steps
+
+## Frontend
+1. Set up the frontend environment using Vite.
+2. Create the main entry point in `src/main.jsx`.
+3. Develop the main application component in `src/App.jsx`.
+4. Style the application using CSS in `src/App.css` and `src/index.css`.
+5. Implement routing and state management as needed.
+
+## Backend
+1. Set up the backend environment using Node.js and Express.
+2. Create the main entry point in `index.js`.
+3. Configure the database connection in `config/db.config.js`.
+4. Define the user model and create the users table in `models/users.model.js`.
+5. Implement authentication logic in `controllers/auth.controller.js`.
+6. Set up routes for authentication in `routes/auth.routes.js`.
+
+## APIs
+1. Define API endpoints for user registration, login, and logout.
+2. Implement input validation and error handling in the controller functions.
+3. Use JWT for authentication and authorization.
+4. Test the API endpoints using Postman or similar tools.
+
+## Database
+1. Set up the MySQL database and create the necessary tables.
+2. Use environment variables to manage database credentials securely.
+3. Implement database queries in the model files.
+
+## Testing
+1. Write unit tests for the backend logic using a testing framework like Jest.
+2. Test the frontend components using a testing library like React Testing Library.
+3. Perform integration testing for the API endpoints.
+
+## Deployment
+1. Prepare the application for deployment by building the frontend assets.
+2. Deploy the backend to a cloud service or server.
+3. Ensure the database is accessible and properly configured in the production environment.
