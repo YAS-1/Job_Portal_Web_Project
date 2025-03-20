@@ -1,5 +1,7 @@
 import {react } from 'react';
 import { CiSearch } from "react-icons/ci";
+import '../App.css';
+import HomeImage from '../assets/home_image3.jpg'
 
 export default function HomePage(){
   // const color = new Color("oklch(0.2533 0.016 252.42)");
@@ -8,7 +10,7 @@ export default function HomePage(){
 
   return(
     <>
-    <section className=' h-screen font-[Roboto]'>
+    <section className='h-screen font-[Roboto]'>
 
       <div className='absolute top-[10px] left-[10px]'>
         <div className='flex'>
@@ -48,18 +50,38 @@ export default function HomePage(){
           </button>
 
         </nav>
+
+
       </div>
+
+      <div className='relative h-[600px]'>
+        <img src={HomeImage} alt="Background Image" className="w-full h-full object-cover absolute"/>
+        <div className='absolute flex w-full h-full top-0 left-0 space-x-[60px] 
+            items-center justify-center bg-black/70'>
+
+        </div>
+        <div className=' text-white font-extrabold absolute top-20 left-10 w-[500px] z-20'>
+          <p className='w-full bg-[#4071ed] h-2 '></p>
+          <p className='text-[40px] pb-10'>Enough with the job hunt struggles, we're here to help. 
+            Land your next role with JobFern!</p>
+          <button className='font-medium bg-[#4071ed] text-white rounded-md p-4 
+          hover:bg-white hover:text-[#4071ed] transition duration-500'>
+            Signup Now!
+          </button>
+        </div>
+      </div>
+
 
 
       <div className=''>
         
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 300"><path fill="#1c2229" fill-opacity="1" 
+        <svg className="m-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 300"><path fill="#1c2229" fill-opacity="1" 
         d="M0,192L80,213.3C160,235,320,277,480,266.7C640,256,800,192,960,165.3C1120,139,1280,149,1360,
         154.7L1440,160L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,
         320L0,320Z"></path></svg>
 
         <div className='flex h-full bg-[#1c2229] text-white px-6 pb-6
-          space-x-4'>
+          space-x-4 '>
           <div className='max-w-[300px]'>
             <p className='text-[40px] font-bold  text-white pb-2'>Let's talk! </p>
             <p className='text-sm pb-4'> Whether you're looking for your next job opportunity or
