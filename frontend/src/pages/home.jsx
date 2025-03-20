@@ -1,16 +1,22 @@
-import {react } from 'react';
+import {react, useEffect } from 'react';
 import { CiSearch } from "react-icons/ci";
 import '../App.css';
 import HomeImage from '../assets/home_image3.jpg'
+import JobList from '../components/homePage/availablejobs';
+import Footer from '../components/homePage/footer';
+import { useNavigate } from 'react-router-dom';
+
 
 export default function HomePage(){
-  // const color = new Color("oklch(0.2533 0.016 252.42)");
-  // console.log(color.hex);
 
+  const navigate = useNavigate()
+  const handleSignup = () => {
+    navigate("/signup"); // Redirect to signup page
+  };
 
   return(
     <>
-    <section className='h-screen font-[Roboto]'>
+    <section className='h-screen font-[Roboto] '>
 
       <div className='absolute top-[10px] left-[10px]'>
         <div className='flex'>
@@ -37,15 +43,17 @@ export default function HomePage(){
 
         <nav className='flex flex-row w-full justify-end space-x-4 font-medium'>
 
-          <button className='text-black p-2 rounded-lg hover:text-white'>
+          <button className='text-black p-2 rounded-lg hover:text-white 
+          cursor-pointer'>
             About Us 
           </button>
 
-          <button className='text-black p-2 rounded-lg'>
+          <button className='text-black p-2 rounded-lg cursor-pointer' onClick={handleSignup}>
             Signup 
           </button>
 
-          <button className='bg-[#1c2229] text-white py-2 px-4 rounded-[50px]'>
+          <button className='bg-[#1c2229] text-white py-2 px-4 rounded-[50px] 
+          cursor-pointer'>
             Login 
           </button>
 
@@ -54,18 +62,19 @@ export default function HomePage(){
 
       </div>
 
-      <div className='relative h-[600px]'>
-        <img src={HomeImage} alt="Background Image" className="w-full h-full object-cover absolute"/>
+      <div className='relative h-[600px] welcome-text'>
+        <img src={HomeImage} alt="Background Image" className="w-full h-full object-cover absolute" loading="lazy"/>
         <div className='absolute flex w-full h-full top-0 left-0 space-x-[60px] 
             items-center justify-center bg-black/70'>
 
         </div>
         <div className=' text-white font-extrabold absolute top-20 left-10 w-[500px] z-20'>
           <p className='w-full bg-[#4071ed] h-2 '></p>
-          <p className='text-[40px] pb-10'>Enough with the job hunt struggles, we're here to help. 
+          <p className='text-[40px] pb-10 welcome-text overflow-auto'>It's enough with the job hunt struggles, we're here to help. 
             Land your next role with JobFern!</p>
           <button className='font-medium bg-[#4071ed] text-white rounded-md p-4 
-          hover:bg-white hover:text-[#4071ed] transition duration-500'>
+          hover:bg-white hover:text-[#4071ed] transition duration-500 cursor-pointer' 
+          onClick={handleSignup}>
             Signup Now!
           </button>
         </div>

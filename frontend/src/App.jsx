@@ -5,6 +5,7 @@ import SignUp from "./pages/signup"
 import Login from "./pages/login"
 import NoPage from './pages/nopage';
 import './App.css'
+import "./components/cssFiles/componentsCSS.css"
 
 function App() {
 
