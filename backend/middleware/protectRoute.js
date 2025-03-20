@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 
-//middleware to check if the the current user is authrnticated or not inorder to access the protected routes
+//middleware to check if the the current user is authenticated or not inorder to access the protected routes
 export const protectRoute = async (req, res, next) => { //checks for authentication and the runs the next handler function if the user is authenticated
     const token = req.cookies.jwt; //getting the token from the cookies
 
@@ -24,7 +24,7 @@ export const checkRole = (allowedRoles) => { //checkRole function accepts an arr
         const hasRole = allowedRoles.some(role => roles.includes(role)); //checking if any of the allowed roles exists in the user roles array
 
         if(!hasRole){ //Incase no allowed role is found
-            return res.status(403).json({ message: "Insuffient permissions" });
+            return res.status(403).json({ message: "No permissions" });
         }
         next(); //calling the next handler function
     }

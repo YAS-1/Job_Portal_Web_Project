@@ -14,7 +14,7 @@ const storage = multer.diskStorage({
     },
 });
 
-//Creating a filter to allow only spaecified file types
+//Creating a filter to allow only specified file types
 const fileFilter = (req, file, cb) => {
     if(file.fieldname === "resume" || file.fieldname === "coverletter"){
         //Checking the file type
