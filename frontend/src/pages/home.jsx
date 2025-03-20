@@ -71,6 +71,23 @@ export default function HomePage(){
         </div>
       </div>
 
+      <div className='w-full p-[20px]'>
+        <div>
+            <p className='text-[#4071ed] font-medium text-lg'>Top Picks</p>
+            <p className='text-[35px] text-[#1c2229]/60 font-bold'>Featured Jobs</p>
+        </div>
+
+        <div className='grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 '>
+          <div className='w-[100px] h-[100px] bg-gray-100'>3</div>
+          <div className='w-[100px] h-[100px] bg-gray-100'>3</div>
+          <div className='w-[100px] h-[100px] bg-gray-100'>3</div>
+          <div className='w-[100px] h-[100px] bg-gray-100'>3</div>
+          <div className='w-[100px] h-[100px] bg-gray-100'>3</div>
+          <div className='w-[100px] h-[100px] bg-gray-100'>3</div>
+        </div>
+
+      </div>
+
 
 
       <div className=''>
@@ -89,7 +106,7 @@ export default function HomePage(){
               Our platform connects job seekers with employers, 
               making the hiring process seamless and efficient. 
               Reach out to us today and take the next step in your career journey</p>
-            <button className='rounded-md bg-white p-2 text-black'>
+            <button className='rounded-md bg-white p-2 text-[#1c2229]'>
               Ask Your question
             </button>
           </div>
