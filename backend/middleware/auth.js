@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 
 //middleware to check if the the current user is authenticated or not inorder to access the protected routes
-export const protectRoute = async (req, res, next) => { //checks for authentication and the runs the next handler function if the user is authenticated
+export const verifyToken = async (req, res, next) => { //checks for authentication and the runs the next handler function if the user is authenticated
     const token = req.cookies.jwt; //getting the token from the cookies
 
     if(!token){ //when token returns null value
