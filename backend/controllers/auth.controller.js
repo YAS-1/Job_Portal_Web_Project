@@ -1,5 +1,5 @@
 import db from "../config/db.config.js";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import { generateTokenAndSetCookie } from "../utils/tokenGenerator.js";
 import { ResetEmail } from "../utils/mailer.js";
 
@@ -46,10 +46,11 @@ export const login = async (res, req) => {
         }
 
         //getting the user details from the database
-        const [user] = await db.query("SELECT * FROM users WHERE email = ?", [email]);
+        const [row] = await db.query("SELECT * FROM users WHERE email = ?", [email]);
+        const user = row[0];
 
-        if(user.length === 0){
-            return res.status(400).json({message: "Error finding user"});
+        if(!user){
+            return res.status(400).json({message: "Invalid email"});
         }
         //Comparing the password entered by the user with the hashed password stored in the database
         const isPasswordMatch = await bcrypt.compare(password, user.password);
