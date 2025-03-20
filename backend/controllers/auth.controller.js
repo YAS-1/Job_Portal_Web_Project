@@ -38,7 +38,7 @@ export const register = async (req, res) =>{
 
 
 //Logging in a user
-export const login = async (res, req) => {
+export const login = async (req, res) => {
     try {
         const {email, password} = req.body; // getting the user details from the request body
         if(!email || !password){
@@ -103,7 +103,7 @@ export const forgotPassword = async (req, res) => {
         const otpExpires = new Date(Date.now() + 10 * 60 * 1000); //setting the OTP code to expire in 10 minutes
 
         //updating the user details in the database
-        await db.query("UPDATE users SET otp_code = ?, otp_expires = ? WHERE user_id = ?", [otp, otpExpires, user.user_id]);
+        await db.query("UPDATE users SET otp_code = ?, otp_expires = ? WHERE email = ?", [otp, otpExpires, email]);
 
         //sending the OTP code to the user email
         await ResetEmail(email, otp);

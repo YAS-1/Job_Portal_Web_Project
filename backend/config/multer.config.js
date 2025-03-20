@@ -1,48 +1,59 @@
 import multer from "multer";
 import path from "path";
 
-//Setting up the storage engine
-const storage = multer.diskStorage({
-    destination: (req, file, cb) =>{
-        cb(null, 'uploads/'); //destination folder for the uploaded files
-    },
-
-    //Generating a unique name for the uploaded file
-    filename: (req, file, cb) => {
-        const extension = path.extname(file.originalname); //extracting the extension of the file
-        cb(null, `${file.fieldname}-${Date.now()}${extension}`); //fieldname is the name of the input field
-    },
+// Define storage for profile pictures
+const profileStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "uploads/profile_pictures/"); // Store profile pictures separately
+  },
+  filename: (req, file, cb) => {
+    const ext = path.extname(file.originalname);
+    cb(null, `profile-${req.user.userId}-${Date.now()}${ext}`);
+  },
 });
 
-//Creating a filter to allow only specified file types
-const fileFilter = (req, file, cb) => {
-    if(file.fieldname === "resume" || file.fieldname === "coverletter"){
-        //Checking the file type
-        if(
-            file.mimetype === "application/pdf" ||
-            file.mimetype === "application/doc" ||
-            file.mimetype === "application/docx" ||
-            file.mimetype === "application/msword" ||
-            file.mimetype === "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-        ){
-            cb(null, true);
-        } else {
-            cb(new Error("Invalid file type. Only PDF, DOC, DOCX files are allowed"));
-        }
-    }
-    else{
-        cb(null, true)
-    }
+// Define storage for resumes and cover letters
+const documentStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "uploads/documents/"); // Store resumes & cover letters separately
+  },
+  filename: (req, file, cb) => {
+    const ext = path.extname(file.originalname);
+    cb(null, `${file.fieldname}-${req.user.userId}-${Date.now()}${ext}`);
+  },
+});
+
+// Define filters
+const profileFilter = (req, file, cb) => {
+  if (file.mimetype.startsWith("image/")) {
+    cb(null, true);
+  } else {
+    cb(new Error("Invalid file type. Only images are allowed for profile pictures!"), false);
+  }
 };
 
-// Initializing the multer object
-const upload = multer({
-    storage: storage,
-    fileFilter: fileFilter,
-    limits: {
-        fileSize: 1024 * 1024 * 5 //5MB file size limit
-    }
+const documentFilter = (req, file, cb) => {
+  if (
+    file.mimetype === "application/pdf" ||
+    file.mimetype === "application/msword" ||
+    file.mimetype.startsWith("application/vnd.openxmlformats-officedocument.wordprocessingml.document")
+  ) {
+    cb(null, true);
+  } else {
+    cb(new Error("Invalid file type. Only PDF and DOC/DOCX files are allowed!"), false);
+  }
+};
+
+// Profile picture upload middleware
+export const uploadProfilePicture = multer({
+  storage: profileStorage,
+  fileFilter: profileFilter,
+  limits: { fileSize: 1024 * 1024 * 2 }, // Limit to 2MB
 });
 
-
-export default upload;
+// Resume & Cover Letter upload middleware
+export const uploadDocuments = multer({
+  storage: documentStorage,
+  fileFilter: documentFilter,
+  limits: { fileSize: 1024 * 1024 * 5 }, // Limit to 5MB
+});
