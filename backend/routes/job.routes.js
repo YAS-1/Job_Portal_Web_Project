@@ -1,7 +1,7 @@
 import express from "express";
 import { 
   createJob, 
-  getJobs, 
+  getAllJobs, 
   getJobById, 
   updateJob, 
   deleteJob 
@@ -11,7 +11,7 @@ import { verifyToken } from "../middleware/auth.js";
 const JobsRouter = express.Router();
 
 // Get all active jobs
-JobsRouter.get("/", getJobs);
+JobsRouter.get("/", getAllJobs);
 
 // Get a single job by ID
 JobsRouter.get("/:job_id", getJobById);
