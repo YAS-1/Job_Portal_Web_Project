@@ -17,10 +17,9 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
 
         {/* Nested Routes for Login & Forgot Password */}
-        <Route path="/login" element={<Login />}>
-          <Route index element={<Login />} />
-          <Route path="forgotpassword" element={<ForgotPassword />} />
-        </Route>
+        <Route path="/login" element={<Login />} />
+          {/* <Route index element={<Login />} /> */}
+        <Route path="/login/forgotpassword" element={<ForgotPassword />} />
 
         <Route path="*" element={<NoPage />} />
       </Routes>

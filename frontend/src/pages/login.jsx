@@ -1,5 +1,5 @@
 import { React, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Outlet } from 'react-router-dom';
 import SignUpImage from '../assets/home_image2.jpg';
 import { MdArrowOutward } from "react-icons/md";
 import { FaRegUser } from "react-icons/fa6";
@@ -98,7 +98,7 @@ export default function Login() {
             ))}
 
             <div className="w-full flex flex-row justify-end">
-              <button className="text-[#4071ed] underline cursor-pointer" onClick={forgotPassword}>Forgot Password?</button>
+              <button type="button" className="text-[#4071ed] underline cursor-pointer" onClick={forgotPassword}>Forgot Password?</button>
             </div>
 
             <button type="submit" className="w-full bg-[#4071ed]/90 text-white py-2 rounded-md my-4 
@@ -111,6 +111,8 @@ export default function Login() {
           </form>
         </div>
       </div>
+
+      <Outlet />
     </div>
   );
 }

@@ -97,8 +97,6 @@ export default function SignUp() {
               </div>
             ))}
 
-            <button type="submit" className="w-full bg-[#4071ed]/90 text-white py-2 rounded-md my-4 cursor-pointer">Submit</button>
-
             <div className="w-full flex flex-row justify-center space-x-2">
               <p className="text-[#1c2229]/80">Already have an account?</p>
               <button className="text-[#4071ed] underline cursor-pointer" onClick={loginpage}>Sign in</button>
