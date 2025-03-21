@@ -174,3 +174,29 @@ export const deleteJob = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+
+// Search jobs
+export const searchJobs = async (req, res) => {
+  try {
+    const { q } = req.query;
+    if (!q) {
+      return res.status(400).json({ message: "Search query is required" });
+    }
+
+    const searchQuery = `%${q}%`;
+    const [jobs] = await db.query(
+      `SELECT * FROM jobs 
+       WHERE title LIKE ? 
+       OR description LIKE ? 
+       OR requirements LIKE ? 
+       OR location LIKE ? 
+       OR job_type LIKE ?`,
+      [searchQuery, searchQuery, searchQuery, searchQuery, searchQuery]
+    );
+
+    res.status(200).json({ jobs });
+  } catch (error) {
+    console.error("Search Jobs Error:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};

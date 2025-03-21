@@ -6,7 +6,7 @@ import { ResetEmail } from "../utils/mailer.js";
 
 //Registering a new user
 export const register = async (req, res) =>{
-    console.log("Registering a new user", req.body);
+    console.log(req.body);
     try {
         const { username, email, password} = req.body; // getting the user details from the request body
 
