@@ -1,107 +1,119 @@
-import { FaSearch, FaMapMarkerAlt, FaUserTie, FaBriefcase, FaMoneyBillAlt } from 'react-icons/fa';
+import { React, useState } from 'react';
+import { useNavigate, Outlet } from 'react-router-dom';
+import SignUpImage from '../assets/home_image2.jpg';
+import { MdArrowOutward } from "react-icons/md";
+import { FaRegUser } from "react-icons/fa6";
+import { MdOutlineEmail } from "react-icons/md";
+import { TbLockPassword } from "react-icons/tb";
 
-const JobSearchFilters = () => {
+export default function Login() {
+  const navigate = useNavigate();
+  const homepage = () => navigate("/home");
+
+  const signUpNavigate = useNavigate();
+  const signUppage = ()=>signUpNavigate("/signup");
+
+  const forgotPasswordNavigate = useNavigate();
+  const forgotPassword = ()=>forgotPasswordNavigate("forgotpassword");
+
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const [errors, setErrors] = useState({});
+
+  // Handle input change
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  // Handle form submission
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    let newErrors = {};
+
+    if (!formData.email.trim()) newErrors.email = "Email is required";
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) newErrors.email = "Invalid email format";
+    if (!formData.password.trim()) newErrors.password = "Password is required";
+
+    setErrors(newErrors);
+
+    if (Object.keys(newErrors).length === 0) {
+      console.log("Form Data Submitted:", formData);
+    }
+  };
+
   return (
-    <div className="bg-white rounded-xl shadow-lg p-6 space-y-6 animate-fade-in-up">
-      {/* Main Search Bar */}
-      <div className="relative">
-        <input
-          type="text"
-          placeholder="Job title, keywords, or company"
-          className="w-full pl-12 pr-4 py-3 rounded-lg border border-gray-300 focus:border-[#4071ed] focus:ring-0 transition-all"
-        />
-        <FaSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-lg" />
+
+
+    <div className='relative h-screen w-full flex items-center justify-center font-poppins'>
+        <img src={SignUpImage} alt="Background Image" className="w-screen h-screen
+        object-cover absolute "/>
+        <div className='absolute flex w-full h-full top-0 left-0 space-x-[60px] 
+            items-center justify-center z-20 bg-black/80'>
+
+        <div className='absolute top-[10px] left-[10px]'>
+          <div className='flex'>
+            <p className='text-[40px] font-bold text-white'>Job</p> 
+            <p className='text-[30px] font-bold text-[#4071ed]'>Fern</p>
+          </div>
+        </div>
+
+        <div className='absolute top-[20px] right-[10px]'>
+          <button className='flex font-medium bg-[#4071ed] text-white rounded-md p-2
+          hover:bg-white hover:text-[#4071ed] transition duration-500 
+          items-center justify-center space-x-2' 
+          onClick={homepage}>
+            <p>Go to main page</p>
+            <MdArrowOutward size={20}/>
+          </button>
+        </div>
+
+        <div className='w-[450px] bg-white rounded-[25px] p-4 text-md'>
+          <div className='flex flex-col items-center justify-center'>
+            <p className='text-[30px] font-bold text-[#1c2229]'>Welcome to JobFern</p>
+            <p className='font-medium text-[15px] text-[#1c2229]/70 pb-4'>Login To Your Account</p>
+          </div>
+
+          <form onSubmit={handleSubmit} className="max-w-md mx-auto p-4 bg-white rounded-lg">
+            {['email', 'password'].map((field, index) => (
+              <div key={index} className="mb-6 relative">
+                <label className="block text-sm font-medium text-[#1c2229]/70 capitalize">{field.replace("confirmpassword", "Confirm Password")}</label>
+                <input
+                  type={field.includes("password") ? "password" : "text"}
+                  name={field}
+                  value={formData[field]}
+                  onChange={handleChange}
+                  className={`w-full p-2 border rounded-md bg-[#f7f7fa] ${errors[field] ? 'border-red-500' : 'border-[#d7d5de]'}
+                    focus:ring-0 focus:ring-white focus:outline-none transition duration-500
+                    focus:border-[#4071ed] focus:shadow-md pl-10`}
+                />
+                <div className="absolute left-[10px] top-[33px]">
+                  {field === "name" && <FaRegUser color='gray' />}
+                  {field === "email" && <MdOutlineEmail color='gray' />}
+                  {field.includes("password") && <TbLockPassword color='gray' size={20} />}
+                </div>
+                {errors[field] && <p className="text-red-500 text-xs mt-1">{errors[field]}</p>}
+              </div>
+            ))}
+
+            <div className="w-full flex flex-row justify-end">
+              <button type="button" className="text-[#4071ed] underline cursor-pointer" onClick={forgotPassword}>Forgot Password?</button>
+            </div>
+
+            <button type="submit" className="w-full bg-[#4071ed]/90 text-white py-2 rounded-md my-4 
+            cursor-pointer">Submit</button>
+
+            <div className="w-full flex flex-row justify-center space-x-2">
+              <p className="text-[#1c2229]/80">Don't have an account?</p>
+              <button className="text-[#4071ed] underline cursor-pointer" onClick={signUppage}>Sign up</button>
+            </div>
+          </form>
+        </div>
       </div>
 
-      {/* Filters Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        {/* Location Filter */}
-        <div className="relative">
-          <select className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-gray-300 appearance-none focus:border-[#4071ed] focus:ring-0">
-            <option>Any Location</option>
-            <option>New York</option>
-            <option>Remote</option>
-          </select>
-          <FaMapMarkerAlt className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-          <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
-            <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-            </svg>
-          </div>
-        </div>
-
-        {/* Experience Level */}
-        <div className="relative">
-          <select className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-gray-300 appearance-none focus:border-[#4071ed] focus:ring-0">
-            <option>Experience Level</option>
-            <option>Entry Level</option>
-            <option>Mid Level</option>
-            <option>Senior Level</option>
-          </select>
-          <FaUserTie className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-          <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
-            <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-            </svg>
-          </div>
-        </div>
-
-        {/* Job Type */}
-        <div className="relative">
-          <select className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-gray-300 appearance-none focus:border-[#4071ed] focus:ring-0">
-            <option>Job Type</option>
-            <option>Full-time</option>
-            <option>Part-time</option>
-            <option>Contract</option>
-          </select>
-          <FaBriefcase className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-          <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
-            <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-            </svg>
-          </div>
-        </div>
-
-        {/* Salary Range */}
-        <div className="relative">
-          <div className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-gray-300 focus:border-[#4071ed] focus:ring-0">
-            <span className="text-gray-400">Salary Range</span>
-          </div>
-          <FaMoneyBillAlt className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-        </div>
-      </div>
-
-      {/* Search Button */}
-      <div className="flex justify-center md:justify-end">
-        <button className="px-8 py-3 bg-[#4071ed] text-white rounded-lg hover:bg-[#3257b8] transition-colors flex items-center gap-2 shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
-          <FaSearch />
-          <span>Search Jobs</span>
-        </button>
-      </div>
+      <Outlet />
     </div>
   );
-};
-
-// Add this CSS animation
-const styles = `
-  @keyframes fade-in-up {
-    0% {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    100% {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  .animate-fade-in-up {
-    animation: fade-in-up 0.5s ease-out;
-  }
-`;
-
-const styleSheet = document.createElement('style');
-styleSheet.innerText = styles;
-document.head.appendChild(styleSheet);
-
-export default JobSearchFilters;
+}
