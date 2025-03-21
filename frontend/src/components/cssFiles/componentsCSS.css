@@ -36,6 +36,7 @@
     opacity: 0;
   }
 
+<<<<<<< HEAD
   .icon-container svg {
     transition: transform 0.3s ease;
   }
@@ -43,3 +44,6 @@
   .icon-container:hover svg {
     transform: rotate(-5deg) scale(1.1);
   }
+=======
+/* drop down */
+>>>>>>> bb0c761 (new changes)

@@ -9,6 +9,11 @@ import {
   FaAlignRight,
   FaAlignLeft,
 } from "react-icons/fa";
+import { RxDashboard } from "react-icons/rx";
+import { IoIosApps } from "react-icons/io";
+import { BsFillJournalBookmarkFill } from "react-icons/bs";
+import { IoSettingsOutline } from "react-icons/io5";
+import { FaPerbyte } from "react-icons/fa";
 import JobSearch from "./search";
 import UserDropdown from "./dropdown";
 import JobSearchFilters from "./search";
@@ -18,10 +23,10 @@ const Sidebar = () => {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navItems = [
-    { icon: <FaUser />, label: "Profile", path: "#" },
-    { icon: <FaBriefcase />, label: "Applications", path: "#" },
-    { icon: <FaFileUpload />, label: "Post Resume", path: "#" },
-    { icon: <FaCog />, label: "Settings", path: "#" },
+    { icon: <RxDashboard />, label: "Dashboard", path: "#" },
+    { icon: <FaPerbyte />, label: "Applications", path: "#" },
+    { icon: <BsFillJournalBookmarkFill />, label: "Jobs", path: "#" },
+    { icon: <IoSettingsOutline />, label: "Settings", path: "#" },
   ];
 
   return (
