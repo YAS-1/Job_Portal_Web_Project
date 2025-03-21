@@ -7,7 +7,10 @@ import { MdOutlineEmail } from "react-icons/md";
 import { TbLockPassword } from "react-icons/tb";
 import { toast } from 'react-toastify';
 <<<<<<< HEAD
+<<<<<<< HEAD
 import axios from 'axios';
+=======
+>>>>>>> 9756ff4 (login&dashboard)
 =======
 >>>>>>> 9756ff4 (login&dashboard)
 
@@ -35,7 +38,11 @@ export default function Login() {
 
   // Handle form submission
 <<<<<<< HEAD
+<<<<<<< HEAD
   const handleSubmit = async(e) => {
+=======
+  const handleSubmit = (e) => {
+>>>>>>> 9756ff4 (login&dashboard)
 =======
   const handleSubmit = (e) => {
 >>>>>>> 9756ff4 (login&dashboard)
@@ -48,6 +55,7 @@ export default function Login() {
 
     setErrors(newErrors);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
     if (Object.keys(newErrors).length === 0) {
       console.log("Form Data Submitted:", formData);
@@ -63,11 +71,16 @@ export default function Login() {
         }
       }
 =======
+=======
+>>>>>>> 9756ff4 (login&dashboard)
     // submit from hereeee
     if (Object.keys(newErrors).length === 0) {
       // console.log("Form Data Submitted:", formData);
       toast.success('Login successfull')
       navigate('/useraccount');
+<<<<<<< HEAD
+>>>>>>> 9756ff4 (login&dashboard)
+=======
 >>>>>>> 9756ff4 (login&dashboard)
     }
   };
@@ -145,7 +158,11 @@ export default function Login() {
     </div>
   );
 <<<<<<< HEAD
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 9756ff4 (login&dashboard)
 =======
 }
 >>>>>>> 9756ff4 (login&dashboard)

@@ -30,11 +30,19 @@ const UserDropdown = () => {
   }, []);
 
   return (
+<<<<<<< HEAD
     <div className="relative inline-block z-20 animate-fade-in-up">
       {/* Profile button */}
 
       <div className='p-[1px] border-2 border-[#4071ed] cursor-pointer rounded-full'>
         <img src={placeHolder}  alt="" className='w-10 h-10  rounded-full 
+=======
+    <div className="relative inline-block z-20">
+      {/* Profile button */}
+
+      <div className='p-[1px] border-2 border-[#4071ed] cursor-pointer rounded-full'>
+        <img src={placeHolder}  alt="" className='w-12 h-12  rounded-full 
+>>>>>>> 9756ff4 (login&dashboard)
         hover:scale-105 object-cover' 
           ref={buttonRef}
           onClick={() => setIsOpen(!isOpen)}
@@ -54,19 +62,32 @@ const UserDropdown = () => {
             </div>
 
             <div className="py-1">
+<<<<<<< HEAD
               <button className="flex items-center px-4 py-2 text-[#1c2229]/80 hover:bg-[#4071ed]/10
+=======
+              <button className="flex items-center px-4 py-2 text-[#1c2229] hover:bg-[#4071ed]/10
+>>>>>>> 9756ff4 (login&dashboard)
               cursor-pointer">
                 <CgProfile className="mr-3 text-[#4071ed]/70" size={20} />
                 Profile
               </button>
+<<<<<<< HEAD
               <button className="flex items-center px-4 py-2 text-[#1c2229]/80 hover:bg-[#4071ed]/10
+=======
+              <button className="flex items-center px-4 py-2 text-[#1c2229] hover:bg-[#4071ed]/10
+>>>>>>> 9756ff4 (login&dashboard)
               cursor-pointer">
                 <IoSettingsOutline className="mr-3 text-[#4071ed]/70" size={20} />
                 Settings
               </button>
 
+<<<<<<< HEAD
               <button className="flex items-center px-4 py-2 text-[#1c2229]/80 hover:bg-[#4071ed]/10
               cursor-pointer " onClick={homepage}>
+=======
+              <button className="flex items-center px-4 py-2 text-[#1c2229] hover:bg-[#4071ed]/10
+              cursor-pointer" onClick={homepage}>
+>>>>>>> 9756ff4 (login&dashboard)
                 <IoIosLogOut className="mr-3 text-[#4071ed]/70" size={20} />
                 Logout
               </button>
