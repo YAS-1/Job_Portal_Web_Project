@@ -1,10 +1,13 @@
 import {react, useEffect } from 'react';
-import { CiSearch } from "react-icons/ci";
+import { useNavigate } from 'react-router-dom';
 import '../App.css';
+import { CiSearch } from "react-icons/ci";
+
 import HomeImage from '../assets/home_image3.jpg'
 import JobList from '../components/homePage/availablejobs';
 import Footer from '../components/homePage/footer';
-import { useNavigate } from 'react-router-dom';
+import WhyChooseUs from '../components/homePage/whyChooseUs';
+
 
 
 export default function HomePage(){
@@ -83,7 +86,11 @@ export default function HomePage(){
       </div>
 
       <JobList/>
+
+      <WhyChooseUs />
+
       <Footer/>
+
 
 
     </section>
