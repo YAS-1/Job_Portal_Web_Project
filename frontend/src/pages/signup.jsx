@@ -22,6 +22,8 @@ export default function SignUp() {
   const [loading, setLoading] = useState(false);
   const [serverMessage, setServerMessage] = useState("");
 
+
+
   // Handle input change
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
