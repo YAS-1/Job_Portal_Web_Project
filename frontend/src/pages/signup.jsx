@@ -5,7 +5,7 @@ import SignUpImage from '../assets/home_image2.jpg';
 import { MdArrowOutward } from "react-icons/md";
 import { FaRegUser } from "react-icons/fa6";
 import { MdOutlineEmail } from "react-icons/md";
-import { TbLockPassword } from "react-icons/tb";
+import { TbBrandGmail, TbLockPassword } from "react-icons/tb";
 
 export default function SignUp() {
   const navigate = useNavigate();
@@ -21,14 +21,6 @@ export default function SignUp() {
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [serverMessage, setServerMessage] = useState("");
-=======
-    name: "",
-    email: "",
-    password: "",
-    confirmpassword: "",
-  });
-
-  const [errors, setErrors] = useState({});
 
 
   // Handle input change
