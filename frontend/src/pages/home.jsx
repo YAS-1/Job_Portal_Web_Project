@@ -17,6 +17,10 @@ export default function HomePage(){
     navigate("/signup"); // Redirect to signup page
   };
 
+  const handleLogin = () =>{
+    navigate('/login')
+  }
+
   return(
     <>
     <section className='h-screen font-[Roboto] '>
@@ -56,7 +60,7 @@ export default function HomePage(){
           </button>
 
           <button className='bg-[#1c2229] text-white py-2 px-4 rounded-[50px] 
-          cursor-pointer'>
+          cursor-pointer' onClick={handleLogin}>
             Login 
           </button>
 
