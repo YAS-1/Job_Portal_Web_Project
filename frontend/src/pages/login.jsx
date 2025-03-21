@@ -5,6 +5,8 @@ import { MdArrowOutward } from "react-icons/md";
 import { FaRegUser } from "react-icons/fa6";
 import { MdOutlineEmail } from "react-icons/md";
 import { TbLockPassword } from "react-icons/tb";
+import { toast } from 'react-toastify';
+import axios from 'axios';
 
 export default function Login() {
   const navigate = useNavigate();
@@ -29,7 +31,7 @@ export default function Login() {
   };
 
   // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
     let newErrors = {};
 
@@ -41,6 +43,17 @@ export default function Login() {
 
     if (Object.keys(newErrors).length === 0) {
       console.log("Form Data Submitted:", formData);
+      try {
+        const response = await axios.post("http://localhost:3337/api/auth/login", formData, {withCredentials: true});
+        toast.success("Login successful");
+        navigate("/home");
+      } catch (error) {
+        if (error.response){
+          toast.error(error.response.data.message);
+        } else {
+          toast.error("An error occurred, please try again.");
+        }
+      }
     }
   };
 
