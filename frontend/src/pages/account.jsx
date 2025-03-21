@@ -24,10 +24,10 @@ export default function UserAccountPanel() {
   return (
     <>
       <div className="flex h-screen bg-gray-100">
+
         {/* Sidebar */}
         <Sidebar />
-        {/* Main Content */}
-        <MainPanel />
+
       </div>
     </>
   );
