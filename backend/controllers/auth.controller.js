@@ -6,25 +6,17 @@ import { ResetEmail } from "../utils/mailer.js";
 
 //Registering a new user
 export const register = async (req, res) =>{
-    console.log("Registering a new user", req.body);
     try {
-        const { username, email, password} = req.body; // getting the user details from the request body
-
-        //validating the user details
-        if (!username || !email || !password) {
-            console.log("All fields are required");
-            return res.status(400).json({ message: "All fields are required" });
-        }
-
+        const { username, email, password, role } = req.body; // getting the user details from the request body
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Regular expression to validate email format
         if(!emailRegex.test(email)){
             return res.status(400).json({message: "Invalid email"});
         }
 
         //checking if the user already exists
-        const [existingUsers] = await db.query("SELECT * FROM users WHERE email = ?", [email]);
-        if (existingUsers.length > 0) {
-            return res.status(400).json({ message: "User already exists" });
+        const [existingUser] = await db.query("SELECT * FROM users WHERE email = ?", [email]);
+        if (existingUser.length>0){
+            return res.status(400).json({message: "User already exists"});
         }
 
         //hashing the password
@@ -32,7 +24,7 @@ export const register = async (req, res) =>{
         const hashedPassword = await bcrypt.hash(password, salt); //hashing the password by applying the generated salt
 
         //inserting the user details into the database
-        const [result] = await db.query("INSERT INTO users (username, email, password) VALUES (?, ?, ?)", [username, email, hashedPassword]);
+        const [result] = await db.query("INSERT INTO users (username, email, password, roles) VALUES (?, ?, ?, ?)", [username, email, hashedPassword, role]);
 
         //Generating a token for the created user
         generateTokenAndSetCookie(result.insertId, res); //inserting the user id into the cookie
