@@ -21,7 +21,14 @@ export default function SignUp() {
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [serverMessage, setServerMessage] = useState("");
+=======
+    name: "",
+    email: "",
+    password: "",
+    confirmpassword: "",
+  });
 
+  const [errors, setErrors] = useState({});
 
 
   // Handle input change
