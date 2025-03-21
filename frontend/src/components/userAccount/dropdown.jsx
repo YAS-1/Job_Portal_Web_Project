@@ -30,11 +30,11 @@ const UserDropdown = () => {
   }, []);
 
   return (
-    <div className="relative inline-block z-20">
+    <div className="relative inline-block z-20 animate-fade-in-up">
       {/* Profile button */}
 
       <div className='p-[1px] border-2 border-[#4071ed] cursor-pointer rounded-full'>
-        <img src={placeHolder}  alt="" className='w-12 h-12  rounded-full 
+        <img src={placeHolder}  alt="" className='w-10 h-10  rounded-full 
         hover:scale-105 object-cover' 
           ref={buttonRef}
           onClick={() => setIsOpen(!isOpen)}
@@ -47,7 +47,7 @@ const UserDropdown = () => {
           ref={dropdownRef}
           className="absolute right-0 mt-2 w-48 origin-top animate-book-dropdown z-30"
         >
-          <div className="bg-white rounded-lg shadow-xl overflow-hidden">
+          <div className="bg-white rounded-lg shadow-xl shadow-[#4071ed] overflow-hidden">
             <div className="p-4 bg-[#f8f9fa] border-b">
               <div className="text-sm font-medium text-[#1c2229]">John Doe</div>
               <div className="text-xs text-gray-500">jobfern@example.com</div>
@@ -77,5 +77,32 @@ const UserDropdown = () => {
     </div>
   );
 };
+
+const styles = `
+  @keyframes bookDropdown {
+    0% {
+      opacity: 0;
+      transform: translateY(-20px) rotateX(45deg);
+    }
+    50% {
+      opacity: 1;
+      transform: translateY(10px) rotateX(-15deg);
+    }
+    100% {
+      transform: translateY(0) rotateX(0);
+    }
+  }
+
+  .animate-book-dropdown {
+    animation: bookDropdown 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+    transform-origin: top right;
+    perspective: 1000px;
+  }
+`;
+
+// Inject the styles
+const styleSheet = document.createElement('style');
+styleSheet.innerText = styles;
+document.head.appendChild(styleSheet);
 
 export default UserDropdown;
