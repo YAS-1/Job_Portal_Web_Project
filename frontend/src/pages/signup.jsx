@@ -24,7 +24,6 @@ export default function SignUp() {
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [serverMessage, setServerMessage] = useState("");
-=======
     name: "",
     email: "",
     password: "",
