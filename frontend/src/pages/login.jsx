@@ -45,6 +45,7 @@ export default function Login() {
   };
 
   return (
+
     <div className='relative h-screen w-full flex items-center justify-center font-poppins'>
         <img src={SignUpImage} alt="Background Image" className="w-screen h-screen
         object-cover absolute "/>
