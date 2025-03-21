@@ -7,6 +7,7 @@ export default function MainPanel() {
     <>
       <main className={`flex-1 transition-margin duration-300 md:ml-4`}>
 <<<<<<< HEAD
+<<<<<<< HEAD
         {/* <div className="flex w-full justify-between p-4">
           <h1 className="text-2xl font-bold text-[#4071ed]/90">Dashboard</h1>
           <UserDropdown />
@@ -14,6 +15,10 @@ export default function MainPanel() {
 =======
         <div className="flex w-full bg-red-50 justify-between p-4">
           <h1 className="text-2xl font-bold text-[#1c2229]">Dashboard</h1>
+=======
+        <div className="flex w-full justify-between p-4">
+          <h1 className="text-2xl font-bold text-[#4071ed]/90">Dashboard</h1>
+>>>>>>> bb0c761 (new changes)
           <UserDropdown />
         </div>
 >>>>>>> 9756ff4 (login&dashboard)

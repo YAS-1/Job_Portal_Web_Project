@@ -31,6 +31,7 @@ const UserDropdown = () => {
 
   return (
 <<<<<<< HEAD
+<<<<<<< HEAD
     <div className="relative inline-block z-20 animate-fade-in-up">
       {/* Profile button */}
 
@@ -43,6 +44,13 @@ const UserDropdown = () => {
       <div className='p-[1px] border-2 border-[#4071ed] cursor-pointer rounded-full'>
         <img src={placeHolder}  alt="" className='w-12 h-12  rounded-full 
 >>>>>>> 9756ff4 (login&dashboard)
+=======
+    <div className="relative inline-block z-20 animate-fade-in-up">
+      {/* Profile button */}
+
+      <div className='p-[1px] border-2 border-[#4071ed] cursor-pointer rounded-full'>
+        <img src={placeHolder}  alt="" className='w-10 h-10  rounded-full 
+>>>>>>> bb0c761 (new changes)
         hover:scale-105 object-cover' 
           ref={buttonRef}
           onClick={() => setIsOpen(!isOpen)}
@@ -55,7 +63,11 @@ const UserDropdown = () => {
           ref={dropdownRef}
           className="absolute right-0 mt-2 w-48 origin-top animate-book-dropdown z-30"
         >
+<<<<<<< HEAD
           <div className="bg-white rounded-lg shadow-xl shadow-[#4071ed]/50 overflow-hidden">
+=======
+          <div className="bg-white rounded-lg shadow-xl shadow-[#4071ed] overflow-hidden">
+>>>>>>> bb0c761 (new changes)
             <div className="p-4 bg-[#f8f9fa] border-b">
               <div className="text-sm font-medium text-[#1c2229]">John Doe</div>
               <div className="text-xs text-gray-500">jobfern@example.com</div>
