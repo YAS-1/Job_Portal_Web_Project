@@ -11,7 +11,11 @@ export default function Dashboard() {
           <h3 className="text-[#4071ed] font-semibold mb-2">Applications Sent</h3>
           <p className="text-3xl text-gray-100">12</p>
           <div className="mt-2 flex items-center text-sm">
+<<<<<<< HEAD
             {/* <span className="text-green-400">↑ 2%</span> */}
+=======
+            <span className="text-green-400">↑ 2%</span>
+>>>>>>> 317081a (dashboard improvement)
             <span className="text-gray-400 ml-2">from last month</span>
           </div>
         </div>

@@ -64,10 +64,14 @@ const UserDropdown = () => {
           className="absolute right-0 mt-2 w-48 origin-top animate-book-dropdown z-30"
         >
 <<<<<<< HEAD
+<<<<<<< HEAD
           <div className="bg-white rounded-lg shadow-xl shadow-[#4071ed]/50 overflow-hidden">
 =======
           <div className="bg-white rounded-lg shadow-xl shadow-[#4071ed] overflow-hidden">
 >>>>>>> bb0c761 (new changes)
+=======
+          <div className="bg-white rounded-lg shadow-xl shadow-[#4071ed]/50 overflow-hidden">
+>>>>>>> 317081a (dashboard improvement)
             <div className="p-4 bg-[#f8f9fa] border-b">
               <div className="text-sm font-medium text-[#1c2229]">John Doe</div>
               <div className="text-xs text-gray-500">jobfern@example.com</div>
@@ -75,24 +79,33 @@ const UserDropdown = () => {
 
             <div className="py-1">
 <<<<<<< HEAD
-              <button className="flex items-center px-4 py-2 text-[#1c2229]/80 hover:bg-[#4071ed]/10
-=======
-              <button className="flex items-center px-4 py-2 text-[#1c2229] hover:bg-[#4071ed]/10
->>>>>>> 9756ff4 (login&dashboard)
-              cursor-pointer">
-                <CgProfile className="mr-3 text-[#4071ed]/70" size={20} />
-                Profile
-              </button>
 <<<<<<< HEAD
               <button className="flex items-center px-4 py-2 text-[#1c2229]/80 hover:bg-[#4071ed]/10
 =======
               <button className="flex items-center px-4 py-2 text-[#1c2229] hover:bg-[#4071ed]/10
 >>>>>>> 9756ff4 (login&dashboard)
+=======
+              <button className="flex items-center px-4 py-2 text-[#1c2229]/80 hover:bg-[#4071ed]/10
+>>>>>>> 317081a (dashboard improvement)
+              cursor-pointer">
+                <CgProfile className="mr-3 text-[#4071ed]/70" size={20} />
+                Profile
+              </button>
+<<<<<<< HEAD
+<<<<<<< HEAD
+              <button className="flex items-center px-4 py-2 text-[#1c2229]/80 hover:bg-[#4071ed]/10
+=======
+              <button className="flex items-center px-4 py-2 text-[#1c2229] hover:bg-[#4071ed]/10
+>>>>>>> 9756ff4 (login&dashboard)
+=======
+              <button className="flex items-center px-4 py-2 text-[#1c2229]/80 hover:bg-[#4071ed]/10
+>>>>>>> 317081a (dashboard improvement)
               cursor-pointer">
                 <IoSettingsOutline className="mr-3 text-[#4071ed]/70" size={20} />
                 Settings
               </button>
 
+<<<<<<< HEAD
 <<<<<<< HEAD
               <button className="flex items-center px-4 py-2 text-[#1c2229]/80 hover:bg-[#4071ed]/10
               cursor-pointer " onClick={homepage}>
@@ -100,6 +113,10 @@ const UserDropdown = () => {
               <button className="flex items-center px-4 py-2 text-[#1c2229] hover:bg-[#4071ed]/10
               cursor-pointer" onClick={homepage}>
 >>>>>>> 9756ff4 (login&dashboard)
+=======
+              <button className="flex items-center px-4 py-2 text-[#1c2229]/80 hover:bg-[#4071ed]/10
+              cursor-pointer " onClick={homepage}>
+>>>>>>> 317081a (dashboard improvement)
                 <IoIosLogOut className="mr-3 text-[#4071ed]/70" size={20} />
                 Logout
               </button>
