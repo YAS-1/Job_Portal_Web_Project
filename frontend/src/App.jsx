@@ -7,6 +7,7 @@ import ForgotPassword from "./components/forgotpassword";
 import NoPage from "./pages/nopage";
 import "./App.css";
 import "./components/cssFiles/componentsCSS.css";
+import UserAccountPanel from "./pages/account";
 
 function App() {
   return (
@@ -20,7 +21,7 @@ function App() {
         <Route path="/login" element={<Login />} />
           {/* <Route index element={<Login />} /> */}
         <Route path="/login/forgotpassword" element={<ForgotPassword />} />
-
+        <Route path="/useraccount" element={<UserAccountPanel/>}/>
         <Route path="*" element={<NoPage />} />
       </Routes>
     </BrowserRouter>

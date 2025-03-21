@@ -17,7 +17,7 @@ const JobSearchFilters = () => {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         {/* Location Filter */}
         <div className="relative">
-          <select className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-gray-300 appearance-none focus:border-[#4071ed] focus:ring-0">
+          <select className="modern-dropdown w-full pl-10 pr-4 py-2.5 rounded-lg border border-gray-300 appearance-none focus:border-[#4071ed] focus:ring-0">
             <option>Any Location</option>
             <option>New York</option>
             <option>Remote</option>
@@ -32,7 +32,7 @@ const JobSearchFilters = () => {
 
         {/* Experience Level */}
         <div className="relative">
-          <select className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-gray-300 appearance-none focus:border-[#4071ed] focus:ring-0">
+          <select className="modern-dropdown w-full pl-10 pr-4 py-2.5 rounded-lg border border-gray-300 appearance-none focus:border-[#4071ed] focus:ring-0">
             <option>Experience Level</option>
             <option>Entry Level</option>
             <option>Mid Level</option>
@@ -48,7 +48,7 @@ const JobSearchFilters = () => {
 
         {/* Job Type */}
         <div className="relative">
-          <select className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-gray-300 appearance-none focus:border-[#4071ed] focus:ring-0">
+          <select className="modern-dropdown w-full pl-10 pr-4 py-2.5 rounded-lg border border-gray-300 appearance-none focus:border-[#4071ed] focus:ring-0">
             <option>Job Type</option>
             <option>Full-time</option>
             <option>Part-time</option>
@@ -82,7 +82,7 @@ const JobSearchFilters = () => {
   );
 };
 
-// Add this CSS animation
+// Add this CSS animation and styles for modern dropdown
 const styles = `
   @keyframes fade-in-up {
     0% {
@@ -97,6 +97,55 @@ const styles = `
 
   .animate-fade-in-up {
     animation: fade-in-up 0.5s ease-out;
+  }
+
+  /* Modern Dropdown Styling */
+  .modern-dropdown {
+    position: relative;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    padding-left: 2.5rem;
+    padding-right: 1rem;
+    padding-top: 0.625rem;
+    padding-bottom: 0.625rem;
+    border-radius: 0.625rem;
+    font-size: 1rem;
+    color: #555;
+    appearance: none;
+    transition: border-color 0.3s ease;
+  }
+
+  .modern-dropdown:focus {
+    border-color: #4071ed;
+    outline: none;
+  }
+
+  .modern-dropdown option {
+    padding: 0.625rem;
+  }
+
+  .modern-dropdown::-ms-expand {
+    display: none;
+  }
+
+  /* Custom Arrow Styling */
+  .modern-dropdown::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 1rem;
+    transform: translateY(-50%);
+    border: solid transparent;
+    border-width: 0.3rem 0.3rem 0 0;
+    border-color: #aaa;
+    border-style: solid;
+    width: 0.5rem;
+    height: 0.5rem;
+    transform: rotate(45deg);
+  }
+
+  .modern-dropdown:focus::after {
+    border-color: #4071ed;
   }
 `;
 
