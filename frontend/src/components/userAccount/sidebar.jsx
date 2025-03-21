@@ -7,10 +7,10 @@ import {
   FaChevronLeft,
   FaChevronRight,
   FaAlignRight,
-  FaAlignLeft 
+  FaAlignLeft,
 } from "react-icons/fa";
 import JobSearch from "./search";
-import UserDropdown from "./userAccount/dropdown";
+import UserDropdown from "./dropdown";
 import JobSearchFilters from "./search";
 
 const Sidebar = () => {
@@ -32,21 +32,20 @@ const Sidebar = () => {
           md:translate-x-0 h-full z-50
           ${isExpanded ? "w-[200px]" : "w-16"}`}
       >
-
         <div className="">
           <button
-              onClick={() => setIsExpanded(!isExpanded)}
-              className="w-full text-[#4071ed] hover:bg-[#4071ed]/10 pr-6 p-2 rounded-lg 
+            onClick={() => setIsExpanded(!isExpanded)}
+            className="w-full text-[#4071ed] hover:bg-[#4071ed]/10 pr-6 p-2 rounded-lg 
               flex justify-end cursor-pointer"
-            >
-              {isExpanded ? (
-                <>
+          >
+            {isExpanded ? (
+              <>
                 <FaAlignRight className="text-xl" />
-                </>
-              ) : (
-                <FaAlignLeft className="text-xl" />
-              )}
-            </button>
+              </>
+            ) : (
+              <FaAlignLeft className="text-xl" />
+            )}
+          </button>
         </div>
 
         <button
@@ -57,13 +56,13 @@ const Sidebar = () => {
         </button>
         <div className={`flex flex-col h-full`}>
           {/* Header */}
-          <div className={`${isExpanded?"":"hidden"}`}>
-            <div className='flex pl-6'>
-                <p className='text-[30px] font-bold'>Job</p> 
-                <p className='text-[20px] font-bold text-[#4071ed]'>Fern</p>
-              </div>
+          <div className={`${isExpanded ? "" : "hidden"}`}>
+            <div className="flex pl-6">
+              <p className="text-[30px] font-bold">Job</p>
+              <p className="text-[20px] font-bold text-[#4071ed]">Fern</p>
+            </div>
           </div>
-          <hr className="text-gray-400 mx-2"/>
+          <hr className="text-gray-400 mx-2" />
           {/* Navigation */}
           <nav className="flex-1 p-2">
             <ul className="space-y-2">
@@ -91,9 +90,11 @@ const Sidebar = () => {
 
           {/* Toggle Button */}
           <div className="p-4 border-t border-gray-700 hidden md:block cursor-pointer">
-            <button className="w-full text-[#4071ed] hover:bg-[#4071ed]/10 pr-6 p-2 rounded-lg 
-              flex justify-end cursor-pointer">
-                Logout
+            <button
+              className="w-full text-[#4071ed] hover:bg-[#4071ed]/10 pr-6 p-2 rounded-lg 
+              flex justify-end cursor-pointer"
+            >
+              Logout
             </button>
           </div>
         </div>

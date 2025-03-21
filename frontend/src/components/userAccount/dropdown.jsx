@@ -1,10 +1,19 @@
 import { useState, useRef, useEffect } from 'react';
-import { FaUserCircle, FaCog, FaSignOutAlt } from 'react-icons/fa';
+import { FaUserCircle } from 'react-icons/fa';
+import { IoIosLogOut } from "react-icons/io";
+import { IoSettingsOutline } from "react-icons/io5";
+import { CgProfile } from "react-icons/cg";
+import placeHolder from "../../assets/default_photo.png"
+import { useNavigate } from 'react-router-dom';
+
 
 const UserDropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
   const buttonRef = useRef(null);
+
+  const navigate = useNavigate();
+  const homepage = () => navigate("/home");
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -22,18 +31,21 @@ const UserDropdown = () => {
 
   return (
     <div className="relative inline-block z-20">
-      <button
-        ref={buttonRef}
-        onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center justify-center w-10 h-10 rounded-full bg-[#4071ed] hover:bg-[#3257b8] transition-colors"
-      >
-        <FaUserCircle className="text-white text-2xl" />
-      </button>
+      {/* Profile button */}
 
+      <div className='p-[1px] border-2 border-[#4071ed] cursor-pointer rounded-full'>
+        <img src={placeHolder}  alt="" className='w-12 h-12  rounded-full 
+        hover:scale-105 object-cover' 
+          ref={buttonRef}
+          onClick={() => setIsOpen(!isOpen)}
+        />
+      </div>
+
+      {/* Dropdown menu */}
       {isOpen && (
         <div
           ref={dropdownRef}
-          className="absolute left-0 mt-2 w-48 origin-top animate-book-dropdown"
+          className="absolute right-0 mt-2 w-48 origin-top animate-book-dropdown z-30"
         >
           <div className="bg-white rounded-lg shadow-xl overflow-hidden">
             <div className="p-4 bg-[#f8f9fa] border-b">
@@ -42,18 +54,22 @@ const UserDropdown = () => {
             </div>
 
             <div className="py-1">
-              <a href="#" className="flex items-center px-4 py-2 text-sm text-[#1c2229] hover:bg-[#4071ed]/10">
-                <FaUserCircle className="mr-3 text-[#4071ed]" />
+              <button className="flex items-center px-4 py-2 text-[#1c2229] hover:bg-[#4071ed]/10
+              cursor-pointer">
+                <CgProfile className="mr-3 text-[#4071ed]/70" size={20} />
                 Profile
-              </a>
-              <a href="#" className="flex items-center px-4 py-2 text-sm text-[#1c2229] hover:bg-[#4071ed]/10">
-                <FaCog className="mr-3 text-[#4071ed]" />
+              </button>
+              <button className="flex items-center px-4 py-2 text-[#1c2229] hover:bg-[#4071ed]/10
+              cursor-pointer">
+                <IoSettingsOutline className="mr-3 text-[#4071ed]/70" size={20} />
                 Settings
-              </a>
-              <a href="#" className="flex items-center px-4 py-2 text-sm text-[#1c2229] hover:bg-[#4071ed]/10">
-                <FaSignOutAlt className="mr-3 text-[#4071ed]" />
+              </button>
+
+              <button className="flex items-center px-4 py-2 text-[#1c2229] hover:bg-[#4071ed]/10
+              cursor-pointer" onClick={homepage}>
+                <IoIosLogOut className="mr-3 text-[#4071ed]/70" size={20} />
                 Logout
-              </a>
+              </button>
             </div>
           </div>
         </div>
