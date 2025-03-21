@@ -74,11 +74,16 @@ export default function UserAccountPanel() {
 =======
     <>
       <div className="flex h-screen bg-gray-100">
+
         {/* Sidebar */}
         <Sidebar />
+<<<<<<< HEAD
         {/* Main Content */}
         <MainPanel />
 >>>>>>> 9756ff4 (login&dashboard)
+=======
+
+>>>>>>> 317081a (dashboard improvement)
       </div>
 
       {/* Main Content */}
