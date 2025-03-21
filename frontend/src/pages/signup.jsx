@@ -1,8 +1,6 @@
 import { React, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
 import axios from 'axios';
-
 import SignUpImage from '../assets/home_image2.jpg';
 import { MdArrowOutward } from "react-icons/md";
 import { FaRegUser } from "react-icons/fa6";
@@ -14,7 +12,6 @@ export default function SignUp() {
   const homepage = () => navigate("/home");
 
   const [formData, setFormData] = useState({
-
     username: "",
     email: "",
     password: "",
@@ -24,15 +21,6 @@ export default function SignUp() {
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [serverMessage, setServerMessage] = useState("");
-=======
-    name: "",
-    email: "",
-    password: "",
-    confirmpassword: "",
-  });
-
-  const [errors, setErrors] = useState({});
-
 
   // Handle input change
   const handleChange = (e) => {
@@ -40,7 +28,6 @@ export default function SignUp() {
   };
 
   // Handle form submission
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -50,20 +37,12 @@ export default function SignUp() {
     let newErrors = {};
 
     if (!formData.username.trim()) newErrors.username = "Name is required";
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    let newErrors = {};
-
-    if (!formData.name.trim()) newErrors.name = "Name is required";
-
     if (!formData.email.trim()) newErrors.email = "Email is required";
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) newErrors.email = "Invalid email format";
     if (!formData.password.trim()) newErrors.password = "Password is required";
     if (formData.password !== formData.confirmpassword) newErrors.confirmpassword = "Passwords do not match";
 
     setErrors(newErrors);
-
 
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
@@ -90,10 +69,6 @@ export default function SignUp() {
       }else {
         setServerMessage("An error occurred. Please try again.");
       }
-
-    if (Object.keys(newErrors).length === 0) {
-      console.log("Form Data Submitted:", formData);
-
     }
   };
 
@@ -128,11 +103,7 @@ export default function SignUp() {
           </div>
 
           <form onSubmit={handleSubmit} className="max-w-md mx-auto p-4 bg-white rounded-lg">
-
             {['username', 'email', 'password', 'confirmpassword'].map((field, index) => (
-
-            {['name', 'email', 'password', 'confirmpassword'].map((field, index) => (
-
               <div key={index} className="mb-6 relative">
                 <label className="block text-sm font-medium text-[#1c2229]/70 capitalize">{field.replace("confirmpassword", "Confirm Password")}</label>
                 <input
@@ -145,11 +116,7 @@ export default function SignUp() {
                     focus:border-[#4071ed] focus:shadow-md pl-10`}
                 />
                 <div className="absolute left-[10px] top-[33px]">
-
                   {field === "username" && <FaRegUser color='gray' />}
-
-                  {field === "name" && <FaRegUser color='gray' />}
-
                   {field === "email" && <MdOutlineEmail color='gray' />}
                   {field.includes("password") && <TbLockPassword color='gray' size={20} />}
                 </div>
@@ -161,19 +128,11 @@ export default function SignUp() {
 
             <div className="w-full flex flex-row justify-center space-x-2">
               <p className="text-[#1c2229]/80">Already have an account?</p>
-
               <button className="text-[#4071ed] underline" onClick={ () => navigate("/login")}>Sign in</button>
-
-              <button className="text-[#4071ed] underline">Sign in</button>
-
             </div>
           </form>
         </div>
       </div>
     </div>
   );
-
 }
-
-}
-
