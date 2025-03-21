@@ -5,7 +5,7 @@ import SignUpImage from '../assets/home_image2.jpg';
 import { MdArrowOutward } from "react-icons/md";
 import { FaRegUser } from "react-icons/fa6";
 import { MdOutlineEmail } from "react-icons/md";
-import { TbBrandGmail, TbLockPassword } from "react-icons/tb";
+import { TbLockPassword } from "react-icons/tb";
 
 export default function SignUp() {
   const navigate = useNavigate();
@@ -21,7 +21,6 @@ export default function SignUp() {
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [serverMessage, setServerMessage] = useState("");
-
 
   // Handle input change
   const handleChange = (e) => {
@@ -90,9 +89,9 @@ export default function SignUp() {
         <div className='absolute top-[20px] right-[10px]'>
           <button className='flex font-medium bg-[#4071ed] text-white rounded-md p-2
           hover:bg-white hover:text-[#4071ed] transition duration-500 
-          items-center justify-center space-x-2 cursor-pointer' 
+          items-center justify-center space-x-2' 
           onClick={homepage}>
-            <p>Go to home page</p>
+            <p>Go to main page</p>
             <MdArrowOutward size={20}/>
           </button>
         </div>
@@ -125,11 +124,11 @@ export default function SignUp() {
               </div>
             ))}
 
-            <button type="submit" className="w-full bg-[#4071ed]/90 text-white py-2 rounded-md my-4 cursor-pointer">Submit</button>
+            <button type="submit" className="w-full bg-[#4071ed]/90 text-white py-2 rounded-md my-4">Submit</button>
 
             <div className="w-full flex flex-row justify-center space-x-2">
               <p className="text-[#1c2229]/80">Already have an account?</p>
-              <button className="text-[#4071ed] underline cursor-pointer" onClick={ () => navigate("/login")}>Sign in</button>
+              <button className="text-[#4071ed] underline" onClick={ () => navigate("/login")}>Sign in</button>
             </div>
           </form>
         </div>

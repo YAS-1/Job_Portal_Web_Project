@@ -204,7 +204,6 @@ export default function ForgotPassword() {
               <div className="w-full flex flex-row justify-center space-x-2 mt-4">
                 <p className="text-[#1c2229]/70">Didn't Receive OTP?</p>
                 <button
-                  type="button"
                   className="text-[#4071ed] underline cursor-pointer "
                   onClick={handleResendOtp}
                 >
