@@ -6,6 +6,7 @@ import { MdArrowOutward } from "react-icons/md";
 import { FaRegUser } from "react-icons/fa6";
 import { MdOutlineEmail } from "react-icons/md";
 import { TbLockPassword } from "react-icons/tb";
+import { toast } from 'react-toastify'; // Import toast
 
 export default function SignUp() {
   const navigate = useNavigate();
@@ -45,40 +46,45 @@ export default function SignUp() {
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
-      setLoading(false);
-      console.log("Validation errors:", newErrors);
-      return;// Exit early if there are validation errors
+        setLoading(false);
+        return; // Exit early if there are validation errors
     }
 
     try {
-        console.log(formData);
-        const response = await axios.post("http://localhost:3337/api/auth/register",
-        formData,
-        {withCredentials: true}
-      );
-      
-      setServerMessage(response.data.message);
-      setLoading(false);
-      navigate("/login");// Redirect to login page
+        const response = await axios.post("http://localhost:3337/api/auth/register", {
+            username: formData.username,
+            email: formData.email,
+            password: formData.password
+        }, { withCredentials: true });
+
+        setServerMessage(response.data.message);
+        setLoading(false);
+
+        // Check for HTTP status code 201
+        if (response.status === 201) {
+            toast.success("Registration successful!"); // Success toast
+            navigate("/login"); // Redirect to login page
+        } else {
+            toast.error(response.data.message || "An error occurred during registration."); // Error toast for any non-success response
+        }
+
     } catch (error) {
-      setLoading(false);
-      if (error.response) {
-        console.log(error.response.data.message);
-        setServerMessage(error.response.data.message);
-      }else {
-        setServerMessage("An error occurred. Please try again.");
-      }
+        setLoading(false);
+        if (error.response) {
+            // Check if error response has a message to display
+            toast.error(error.response.data.message || "An error occurred. Please try again.");
+        } else {
+            toast.error("An error occurred. Please try again.");
+        }
     }
-  };
+};
+
+
 
   return (
     <div className='relative h-screen w-full flex items-center justify-center font-poppins'>
-        <img src={SignUpImage} alt="Background Image" className="w-screen h-screen
-        object-cover absolute "/>
-        <div className='absolute flex w-full h-full top-0 left-0 space-x-[60px] 
-            items-center justify-center z-20 bg-black/80'>
-
+      <img src={SignUpImage} alt="Background Image" className="w-screen h-screen object-cover absolute "/>
+      <div className='absolute flex w-full h-full top-0 left-0 space-x-[60px] items-center justify-center z-20 bg-black/80'>
         <div className='absolute top-[10px] left-[10px]'>
           <div className='flex'>
             <p className='text-[40px] font-bold text-white'>Job</p> 
@@ -88,9 +94,8 @@ export default function SignUp() {
 
         <div className='absolute top-[20px] right-[10px]'>
           <button className='flex font-medium bg-[#4071ed] text-white rounded-md p-2
-          hover:bg-white hover:text-[#4071ed] transition duration-500 
-          items-center justify-center space-x-2' 
-          onClick={homepage}>
+            hover:bg-white hover:text-[#4071ed] transition duration-500 items-center justify-center space-x-2' 
+            onClick={homepage}>
             <p>Go to main page</p>
             <MdArrowOutward size={20}/>
           </button>
@@ -128,7 +133,7 @@ export default function SignUp() {
 
             <div className="w-full flex flex-row justify-center space-x-2">
               <p className="text-[#1c2229]/80">Already have an account?</p>
-              <button className="text-[#4071ed] underline" onClick={ () => navigate("/login")}>Sign in</button>
+              <button className="text-[#4071ed] underline" onClick={() => navigate("/login")}>Sign in</button>
             </div>
           </form>
         </div>

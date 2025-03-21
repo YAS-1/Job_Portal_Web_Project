@@ -4,7 +4,8 @@ import {
   getAllJobs, 
   getJobById, 
   updateJob, 
-  deleteJob 
+  deleteJob,
+  searchJobs 
 } from "../controllers/job.controller.js";
 import { verifyToken } from "../middleware/auth.js";
 
@@ -12,6 +13,9 @@ const JobsRouter = express.Router();
 
 // Get all active jobs
 JobsRouter.get("/", getAllJobs);
+
+// Search jobs
+JobsRouter.get("/search", searchJobs);
 
 // Get a single job by ID
 JobsRouter.get("/:job_id", getJobById);
