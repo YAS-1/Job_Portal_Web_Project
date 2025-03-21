@@ -24,7 +24,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(cors());
 
-const port = process.env.WEB_PORT || 3333;
+const port = process.env.WEB_PORT || 3337;
 
 //Routes
 app.use("/api/auth", AuthRouter);
