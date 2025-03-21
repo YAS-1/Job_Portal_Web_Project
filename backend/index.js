@@ -22,12 +22,9 @@ dotenv.config();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(cors({
-    origin:["http://localhost:3000", "http://localhost:5173"],
-    credentials: true,
-}));
+app.use(cors());
 
-const port = process.env.WEB_PORT || 3337;
+const port = process.env.WEB_PORT || 3333;
 
 //Routes
 app.use("/api/auth", AuthRouter);
