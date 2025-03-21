@@ -86,9 +86,12 @@ export default function HomePage(){
       </div>
 
       <JobList/>
+
       <WhyChooseUs />
 
       <Footer/>
+
+
 
     </section>
 
