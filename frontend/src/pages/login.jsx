@@ -12,7 +12,11 @@ import axios from 'axios';
 =======
 >>>>>>> 9756ff4 (login&dashboard)
 =======
+<<<<<<< HEAD
 >>>>>>> 9756ff4 (login&dashboard)
+=======
+>>>>>>> 07e52f4d505aba68923c93fddbe25282ac2cf86a
+>>>>>>> 054d5ca1d6f40fc08d0757101cd8792dd83d6366
 
 export default function Login() {
   const navigate = useNavigate();
@@ -45,7 +49,11 @@ export default function Login() {
 >>>>>>> 9756ff4 (login&dashboard)
 =======
   const handleSubmit = (e) => {
+<<<<<<< HEAD
 >>>>>>> 9756ff4 (login&dashboard)
+=======
+>>>>>>> 07e52f4d505aba68923c93fddbe25282ac2cf86a
+>>>>>>> 054d5ca1d6f40fc08d0757101cd8792dd83d6366
     e.preventDefault();
     let newErrors = {};
 
@@ -72,16 +80,25 @@ export default function Login() {
       }
 =======
 =======
+<<<<<<< HEAD
 >>>>>>> 9756ff4 (login&dashboard)
+=======
+>>>>>>> 07e52f4d505aba68923c93fddbe25282ac2cf86a
+>>>>>>> 054d5ca1d6f40fc08d0757101cd8792dd83d6366
     // submit from hereeee
     if (Object.keys(newErrors).length === 0) {
       // console.log("Form Data Submitted:", formData);
       toast.success('Login successfull')
       navigate('/useraccount');
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> 9756ff4 (login&dashboard)
 =======
+=======
+>>>>>>> 054d5ca1d6f40fc08d0757101cd8792dd83d6366
 >>>>>>> 9756ff4 (login&dashboard)
+=======
+>>>>>>> 07e52f4d505aba68923c93fddbe25282ac2cf86a
     }
   };
 
@@ -165,4 +182,8 @@ export default function Login() {
 >>>>>>> 9756ff4 (login&dashboard)
 =======
 }
+<<<<<<< HEAD
 >>>>>>> 9756ff4 (login&dashboard)
+=======
+>>>>>>> 07e52f4d505aba68923c93fddbe25282ac2cf86a
+>>>>>>> 054d5ca1d6f40fc08d0757101cd8792dd83d6366

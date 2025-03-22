@@ -70,11 +70,16 @@ export default function UserAccountPanel() {
         <Sidebar />
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         {/* Main Content */}
         <MainPanel/>
 =======
 
 >>>>>>> 317081a (dashboard improvement)
+=======
+        {/* Main Content */}
+        <MainPanel/>
+>>>>>>> 054d5ca1d6f40fc08d0757101cd8792dd83d6366
       </div>
     </div>
   );
