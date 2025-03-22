@@ -2,9 +2,12 @@ import { React, useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import JobApplicationForm from "../jobs/JobApplicationForm";
 
 const JobList = ({ searchResults, isSearching, searchQuery, allJobs }) => {
 	const [userApplications, setUserApplications] = useState([]);
+	const [showApplicationForm, setShowApplicationForm] = useState(false);
+	const [selectedJobId, setSelectedJobId] = useState(null);
 	const navigate = useNavigate();
 
 	// Create axios instance with default config
@@ -61,7 +64,8 @@ const JobList = ({ searchResults, isSearching, searchQuery, allJobs }) => {
 					toast.info("You have already applied for this job");
 					return;
 				}
-				navigate(`/job/${jobId}`);
+				setSelectedJobId(jobId);
+				setShowApplicationForm(true);
 			})
 			.catch((error) => {
 				if (error.response?.status === 401) {
@@ -158,6 +162,16 @@ const JobList = ({ searchResults, isSearching, searchQuery, allJobs }) => {
 						);
 					})}
 				</div>
+			)}
+
+			{showApplicationForm && (
+				<JobApplicationForm
+					jobId={selectedJobId}
+					onClose={() => {
+						setShowApplicationForm(false);
+						setSelectedJobId(null);
+					}}
+				/>
 			)}
 		</>
 	);
