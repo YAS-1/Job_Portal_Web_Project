@@ -4,6 +4,7 @@ import SignUp from "./pages/signup";
 import Login from "./pages/login";
 import ForgotPassword from "./components/forgotpassword";
 import NoPage from "./pages/nopage";
+import UserProfile from "./pages/UserProfile";
 import "./App.css";
 import "./components/cssFiles/componentsCSS.css";
 
@@ -16,6 +17,7 @@ function App() {
 				<Route path='/signup' element={<SignUp />} />
 				<Route path='/login' element={<Login />} />
 				<Route path='/login/forgotpassword' element={<ForgotPassword />} />
+				<Route path='/profile' element={<UserProfile />} />
 				<Route path='*' element={<NoPage />} />
 			</Routes>
 		</BrowserRouter>
