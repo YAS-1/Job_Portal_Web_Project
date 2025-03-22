@@ -1,15 +1,6 @@
-<<<<<<< HEAD
 import React, { useState } from 'react';
 import { FaUser, FaBriefcase, FaCog, FaSignOutAlt } from 'react-icons/fa';
 import { toast } from 'react-toastify'; // For notifications
-=======
-import React, { useState } from "react";
-import { FaUser, FaBriefcase, FaCog, FaSignOutAlt } from "react-icons/fa";
-import { toast } from "react-toastify"; // For notifications
-import Sidebar from "../components/userAccount/sidebar";
-import UserDropdown from "../components/userAccount/dropdown";
-import MainPanel from "../components/userAccount/mainPanel";
->>>>>>> 9756ff4 (login&dashboard)
 
 export default function UserAccountPanel() {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
