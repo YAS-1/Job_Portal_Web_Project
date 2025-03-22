@@ -13,7 +13,14 @@ export const getMyProfile = async (req, res) => {
       return res.status(404).json({ message: "User not found." });
     }
 
-    res.status(200).json(users[0]);
+    // If there's a profile picture, convert the path to a URL
+    const user = users[0];
+    if (user.profile_picture) {
+      // Convert the relative path to a URL
+      user.profile_picture = `http://localhost:3337/${user.profile_picture.replace(/\\/g, '/')}`;
+    }
+
+    res.status(200).json(user);
   } catch (error) {
     console.error("Get Profile Error:", error);
     res.status(500).json({ message: "Server error" });

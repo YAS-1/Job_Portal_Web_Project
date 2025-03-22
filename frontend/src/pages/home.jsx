@@ -9,6 +9,7 @@ import HomeImage from "../assets/home_image3.jpg";
 import JobList from "../components/homePage/availablejobs";
 import Footer from "../components/homePage/footer";
 import WhyChooseUs from "../components/homePage/whyChooseUs";
+import Sidebar from "../components/layout/Sidebar";
 
 export default function HomePage() {
 	const navigate = useNavigate();
@@ -127,6 +128,7 @@ export default function HomePage() {
 
 	return (
 		<>
+			{isLoggedIn && <Sidebar />}
 			<section className='h-screen font-[Roboto] '>
 				<div className='absolute top-[10px] left-[10px]'>
 					<div className='flex'>
