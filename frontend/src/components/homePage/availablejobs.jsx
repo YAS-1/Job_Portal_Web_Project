@@ -132,32 +132,15 @@ const JobList = ({ searchResults, isSearching, searchQuery, allJobs }) => {
 						return (
 							<div
 								key={job.job_id}
-								className='hidden-card bg-white shadow-lg rounded-2xl p-6 hover:scale-105 transform transition-all duration-300 ease-in-out hover:shadow-2xl'>
-								<h3 className='text-xl font-semibold text-gray-800'>
-									{job.title}
-								</h3>
-								<p className='text-gray-600 mt-2'>
-									{job.job_type} | {job.location}
-								</p>
-								<p className='mt-2 text-gray-600'>Salary: {job.salary_range}</p>
-								<p className='mt-4 text-gray-700 line-clamp-3'>
-									{job.description}
-								</p>
-								<div className='mt-4 flex justify-between items-center'>
-									<span className='text-sm text-gray-500'>
-										Posted: {new Date(job.created_at).toLocaleDateString()}
-									</span>
-									<button
-										onClick={() => handleApply(job.job_id)}
-										disabled={hasApplied}
-										className={`px-4 py-2 rounded-lg transition-all duration-300 ${
-											hasApplied
-												? "bg-gray-300 text-gray-500 cursor-not-allowed"
-												: "bg-[#4071ed] text-white hover:bg-[#4071ed]/80"
-										}`}>
-										{hasApplied ? "Applied" : "Apply Now"}
-									</button>
-								</div>
+								className="bg-white shadow-lg rounded-lg p-4 cursor-pointer hover:shadow-xl transition"
+								onClick={() => onJobSelect(job.job_id)}
+							>
+								<h3 className="text-lg font-bold"><strong>Title</strong>: {job.title}</h3>
+								<p className="text-gray-600"><strong>Location</strong>: {job.location}</p>
+								<p className="text-gray-500"><strong>Salary range</strong>: {job.salary_range}</p>
+								<p className="text-gray-700"><strong>Description</strong>: {job.description}</p>
+								<p className="text-gray-600"><strong>Requirements</strong>: {job.requirements}</p>
+								<p className="text-gray-600">{job.jJob_type}</p>
 							</div>
 						);
 					})}

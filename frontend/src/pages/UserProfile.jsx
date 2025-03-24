@@ -68,7 +68,6 @@ const UserProfile = () => {
 				setIsLoading(false);
 			}
 		};
-
 		fetchProfile();
 	}, [navigate]);
 
@@ -105,10 +104,16 @@ const UserProfile = () => {
 			);
 
 			if (response.data.profile_picture) {
-				setPreviewImage(response.data.profile_picture);
+				 // Ensure the profile picture URL is absolute and prevent caching
+				 const newProfilePicture = response.data.profile_picture.startsWith("http")
+				 ? response.data.profile_picture
+				 : `http://localhost:3337/${response.data.profile_picture}?t=${new Date().getTime()}`;
+
+				// Update the previewImage and userProfile states immediately
+				setPreviewImage(newProfilePicture);
 				setUserProfile((prev) => ({
 					...prev,
-					profile_picture: response.data.profile_picture,
+					profile_picture: newProfilePicture,
 				}));
 				toast.success("Profile picture updated successfully!");
 			}
@@ -175,7 +180,7 @@ const UserProfile = () => {
 			await api.post("/api/user/upgrade-to-employer");
 			toast.success("Successfully upgraded to employer role");
 			// Refresh profile data
-			const response = await api.get("/api/user/me");
+			await api.get("/api/user/me");
 			setUserProfile(response.data.user);
 		} catch (error) {
 			console.error("Error upgrading to employer:", error);
@@ -232,14 +237,6 @@ const UserProfile = () => {
 												className='hidden'
 											/>
 										</label>
-									</div>
-									<div>
-										<p className='text-sm text-gray-600'>
-											Recommended: Square image, max 2MB
-										</p>
-										<p className='text-sm text-gray-600'>
-											Supported formats: JPG, PNG, GIF
-										</p>
 									</div>
 								</div>
 							</div>

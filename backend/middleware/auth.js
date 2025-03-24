@@ -16,16 +16,3 @@ export const verifyToken  = async (req, res, next) => { //checks for authenticat
     });
 };
 
-
-//role-checking middleware
-export const checkRole = (allowedRoles) => { //checkRole function accepts an array of allowed roles
-    return (req, res, next) => {
-        const roles = req.user.roles ? req.user.roles.split(",") : []; //splitting the user roles by a comma and converting it to an array
-        const hasRole = allowedRoles.some(role => roles.includes(role)); //checking if any of the allowed roles exists in the user roles array
-
-        if(!hasRole){ //Incase no allowed role is found
-            return res.status(403).json({ message: "No permissions" });
-        }
-        next(); //calling the next handler function
-    }
-}
