@@ -2,21 +2,37 @@ import db from '../config/db.config.js'; // Adjust according to your project str
 
 // Create a new job listing
 export const createJob = async (req, res) => {
+  const { title, description, location, salary_range, jobType, requirements } = req.body;
+
+  // Validate required fields
+  if (!title || !description || !location) {
+    return res.status(400).json({ message: "Title, description, and location are required." });
+  }
+
   try {
-    const { title, description, requirements, location, job_type, salary_range, expiry_date, status } = req.body;
-    const employer_id = req.user.userId; // Assuming you're using JWT authentication to get user info
+    const employer_id = req.user.userId; // Assuming `req.user` contains the authenticated employer's ID
 
-    // Insert the new job listing into the database
-    const [result] = await db.query(
-      `INSERT INTO jobs (title, description, requirements, location, job_type, salary_range, expiry_date, status, employer_id) 
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-      [title, description, requirements, location, job_type, salary_range, expiry_date, status, employer_id]
-    );
+    // Insert the new job into the database
+    const query = `
+      INSERT INTO jobs (title, description, location, salary_range, job_type, requirements, employer_id)
+      VALUES (?, ?, ?, ?, ?, ?, ?)
+    `;
+    const values = [
+      title,
+      description,
+      location,
+      salary_range || null,
+      jobType || "Full-time",
+      requirements || null,
+      employer_id,
+    ];
 
-    res.status(201).json({ message: "Job created successfully!", job_id: result.insertId });
+    await db.query(query, values);
+
+    res.status(201).json({ message: "Job created successfully." });
   } catch (error) {
-    console.error("Create Job Error:", error);
-    res.status(500).json({ message: "Server error" });
+    console.error("Error creating job:", error);
+    res.status(500).json({ message: "Error creating job." });
   }
 };
 

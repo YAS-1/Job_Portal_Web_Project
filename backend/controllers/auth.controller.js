@@ -5,42 +5,46 @@ import { ResetEmail } from "../utils/mailer.js";
 
 
 //Registering a new user
-export const register = async (req, res) =>{
-    console.log(req.body);
+export const register = async (req, res) => {
     try {
-        const { username, email, password} = req.body; // getting the user details from the request body
+        const { username, email, password, role} = req.body; // Include role in the request body
 
-        //validating the user details
+        // Validate required fields
         if (!username || !email || !password) {
             console.log("All fields are required");
             return res.status(400).json({ message: "All fields are required" });
         }
 
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Regular expression to validate email format
-        if(!emailRegex.test(email)){
-            return res.status(400).json({message: "Invalid email"});
+        if (!emailRegex.test(email)) {
+            return res.status(400).json({ message: "Invalid email" });
         }
 
-        //checking if the user already exists
+        // Check if the user already exists
         const [existingUsers] = await db.query("SELECT * FROM users WHERE email = ?", [email]);
         if (existingUsers.length > 0) {
             return res.status(400).json({ message: "User already exists" });
         }
 
-        //hashing the password
-        const salt = await bcrypt.genSalt(10); //generating a salt
-        const hashedPassword = await bcrypt.hash(password, salt); //hashing the password by applying the generated salt
+        // Hash the password
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
 
-        //inserting the user details into the database
-        const [result] = await db.query("INSERT INTO users (username, email, password) VALUES (?, ?, ?)", [username, email, hashedPassword]);
+        // Set the default role to jobseeker if no role is provided
+        const userRole = role || "jobseeker";
 
-        //Generating a token for the created user
-        generateTokenAndSetCookie(result.insertId, res); //inserting the user id into the cookie
-        res.status(201).json({message: "User registered successfully"});
+        // Insert the user into the database
+        const [result] = await db.query(
+            "INSERT INTO users (username, email, password, roles) VALUES (?, ?, ?, ?)",
+            [username, email, hashedPassword, userRole]
+        );
 
+        // Generate a token with the user's role
+        generateTokenAndSetCookie(result.insertId, userRole, res);
+        res.status(201).json({ message: "User registered successfully" });
     } catch (error) {
         console.log(`Error in registering user: ${error}`);
-        res.status(500).json({message: "Error in registering new user"});
+        res.status(500).json({ message: "Error in registering new user" });
     }
 };
 
@@ -48,35 +52,31 @@ export const register = async (req, res) =>{
 //Logging in a user
 export const login = async (req, res) => {
     try {
-        const {email, password} = req.body; // getting the user details from the request body
-        if(!email || !password){
-            return res.status(400).json({message: "Please enter both email and password"});
+        const { email, password } = req.body; // getting the user details from the request body
+        if (!email || !password) {
+            return res.status(400).json({ message: "Please enter both email and password" });
         }
 
-        //getting the user details from the database
+        // Getting the user details from the database
         const [row] = await db.query("SELECT * FROM users WHERE email = ?", [email]);
-        if(!row){
-            return res.status(400).json({message: "Invalid email or password"});
+        if (!row.length) {
+            return res.status(400).json({ message: "Invalid email or password" });
         }
         const user = row[0];
 
-        if(!user){
-            return res.status(400).json({message: "Invalid email"});
-        }
-        //Comparing the password entered by the user with the hashed password stored in the database
+        // Comparing the password entered by the user with the hashed password stored in the database
         const isPasswordMatch = await bcrypt.compare(password, user.password);
 
-        if(!isPasswordMatch){
-            return res.status(400).json({message: "Invalid password"});
+        if (!isPasswordMatch) {
+            return res.status(400).json({ message: "Invalid password" });
         }
 
-        //Generating a token for the logged in user
-        generateTokenAndSetCookie(user.user_id, res); //inserting the user id into the cookie
-        res.status(200).json({message: "User logged in successfully"});
-
+        // Generating a token for the logged-in user
+        generateTokenAndSetCookie(user.user_id, user.roles, res); // Include the user's role in the token
+        res.status(200).json({ message: "User logged in successfully" });
     } catch (error) {
         console.log(`Error in logging in user: ${error}`);
-        res.status(500).json({message: "Error in logging in user"});
+        res.status(500).json({ message: "Error in logging in user" });
     }
 };
 

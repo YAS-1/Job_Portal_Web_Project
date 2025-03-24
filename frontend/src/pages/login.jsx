@@ -27,11 +27,13 @@ export default function Login() {
 
   // Handle input change
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
   };
 
+
   // Handle form submission
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     let newErrors = {};
 
@@ -42,20 +44,22 @@ export default function Login() {
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length === 0) {
-      console.log("Form Data Submitted:", formData);
-      try {
-        const response = await axios.post("http://localhost:3337/api/auth/login", formData, {withCredentials: true});
-        toast.success("Login successful");
-        navigate("/home");
-      } catch (error) {
-        if (error.response){
-          toast.error(error.response.data.message);
-        } else {
-          toast.error("An error occurred, please try again.");
+        console.log("Form Data Submitted:", formData);
+        try {
+            const response = await axios.post("http://localhost:3337/api/auth/login", formData, { withCredentials: true });
+            toast.success("Login successful");
+            navigate("/home");
+        } catch (error) {
+            if (error.response) {
+                toast.error(error.response.data.message);
+            } else if (error.request) {
+                toast.error("Unable to connect to the server. Please try again later.");
+            } else {
+                toast.error("An unexpected error occurred. Please try again.");
+            }
         }
-      }
     }
-  };
+};
 
   return (
 
