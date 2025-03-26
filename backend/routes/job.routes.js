@@ -5,7 +5,8 @@ import {
   getJobById, 
   updateJob, 
   deleteJob,
-  searchJobs 
+  searchJobs,
+
 } from "../controllers/job.controller.js";
 import { verifyToken } from "../middleware/auth.js";
 import { checkRole } from "../middleware/checkRole.js";
@@ -29,5 +30,8 @@ JobsRouter.put("/:job_id", verifyToken, checkRole("employer"), updateJob);
 
 // Delete a job (Only the employer who created it can delete it)
 JobsRouter.delete("/:job_id", verifyToken, checkRole("employer"), deleteJob);
+
+
+
 
 export default JobsRouter;

@@ -1,163 +1,218 @@
-import { React, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
-import JobApplicationForm from "../jobs/JobApplicationForm";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-const JobList = ({ searchResults, isSearching, searchQuery, allJobs }) => {
-	const [userApplications, setUserApplications] = useState([]);
-	const [showApplicationForm, setShowApplicationForm] = useState(false);
-	const [selectedJobId, setSelectedJobId] = useState(null);
-	const navigate = useNavigate();
+const AvailableJobs = () => {
+  const [jobs, setJobs] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedJob, setSelectedJob] = useState(null);
+  const [resume, setResume] = useState(null);
+  const [coverLetter, setCoverLetter] = useState(null);
+  const [appliedJobs, setAppliedJobs] = useState(new Set());
+  const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false); // Job details modal state
 
-	// Create axios instance with default config
-	const api = axios.create({
-		baseURL: "http://localhost:3337",
-		withCredentials: true, // Important for handling cookies
-	});
+  useEffect(() => {
+    const fetchJobs = async () => {
+      try {
+        const response = await axios.get("http://localhost:3337/api/jobs", {
+          withCredentials: true,
+        });
+        setJobs(response.data.jobs);
+      } catch (error) {
+        console.error("Error fetching jobs:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchJobs();
+  }, []);
 
-	// Fetch user's applications if logged in
-	useEffect(() => {
-		const fetchUserApplications = async () => {
-			try {
-				const response = await api.get("/api/applications/my-applications");
-				setUserApplications(response.data);
-			} catch (error) {
-				// Only log error if it's not a 401 (unauthorized) error
-				if (error.response?.status !== 401) {
-					console.error("Error fetching user applications:", error);
-				}
-			}
-		};
+  const handleApply = (job) => {
+    setSelectedJob(job);
+    setIsModalOpen(true);
+  };
 
-		fetchUserApplications();
-	}, []);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-	useEffect(() => {
-		const observer = new IntersectionObserver(
-			(entries) => {
-				entries.forEach((entry) => {
-					if (entry.isIntersecting) {
-						entry.target.classList.add("show-card");
-					}
-				});
-			},
-			{ threshold: 0.3 }
-		);
+    if (!resume || !coverLetter) {
+      toast.error("Please upload both resume and cover letter");
+      return;
+    }
 
-		const cards = document.querySelectorAll(".hidden-card");
-		cards.forEach((card) => observer.observe(card));
+    const formData = new FormData();
+    formData.append("resume", resume);
+    formData.append("cover_letter", coverLetter);
+    formData.append("job_id", selectedJob.job_id);
 
-		return () => {
-			cards.forEach((card) => observer.unobserve(card));
-		};
-	}, [allJobs, searchResults]);
+    try {
+      await axios.post("http://localhost:3337/api/applications/apply", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+        withCredentials: true,
+      });
 
-	const handleApply = (jobId) => {
-		// Check if user is logged in by making a test request
-		api
-			.get("/api/applications/my-applications")
-			.then(() => {
-				// If request succeeds, user is logged in
-				const hasApplied = userApplications.some((app) => app.job_id === jobId);
-				if (hasApplied) {
-					toast.info("You have already applied for this job");
-					return;
-				}
-				setSelectedJobId(jobId);
-				setShowApplicationForm(true);
-			})
-			.catch((error) => {
-				if (error.response?.status === 401) {
-					toast.error("Please login to apply for jobs");
-					navigate("/login");
-				} else {
-					toast.error("Error checking application status");
-				}
-			});
-	};
+      // Show toast notification
+      toast.success("Application submitted successfully!");
 
-	const displayJobs = searchQuery ? searchResults : allJobs;
-	const isLoading = isSearching;
+      // Mark the job as applied
+      setAppliedJobs((prev) => new Set([...prev, selectedJob.job_id]));
 
-	if (isLoading) {
-		return (
-			<div className='p-6'>
-				<p className='text-[#4071ed] my-2'>Top Picks</p>
-				<p className='text-[30px] font-bold text-[#1c2229]/80'>
-					{searchQuery
-						? `Search Results for "${searchQuery}"`
-						: "Featured Jobs"}
-				</p>
-				<div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-6'>
-					{[1, 2, 3].map((i) => (
-						<div
-							key={i}
-							className='bg-white shadow-lg rounded-2xl p-6 animate-pulse'>
-							<div className='h-6 bg-gray-200 rounded w-3/4 mb-4'></div>
-							<div className='h-4 bg-gray-200 rounded w-1/2 mb-4'></div>
-							<div className='h-20 bg-gray-200 rounded mb-4'></div>
-							<div className='h-10 bg-gray-200 rounded'></div>
-						</div>
-					))}
-				</div>
-			</div>
-		);
-	}
+      // Close modal
+      setIsModalOpen(false);
+    } catch (error) {
+      console.error("Error applying for job:", error);
+      toast.error("Error submitting application");
+    }
+  };
 
-	return (
-		<>
-			<div className='p-6'>
-				<p className='text-[#4071ed] my-2'>Top Picks</p>
-				<p className='text-[30px] font-bold text-[#1c2229]/80'>
-					{searchQuery
-						? `Search Results for "${searchQuery}"`
-						: "Featured Jobs"}
-				</p>
-			</div>
-			{displayJobs.length === 0 ? (
-				<div className='p-6 text-center'>
-					<p className='text-gray-600 text-lg'>
-						{searchQuery
-							? `No jobs found matching "${searchQuery}"`
-							: "No jobs available at the moment"}
-					</p>
-				</div>
-			) : (
-				<div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-6'>
-					{displayJobs.map((job) => {
-						const hasApplied = userApplications.some(
-							(app) => app.job_id === job.job_id
-						);
-						return (
-							<div
-								key={job.job_id}
-								className="bg-white shadow-lg rounded-lg p-4 cursor-pointer hover:shadow-xl transition"
-								onClick={() => onJobSelect(job.job_id)}
-							>
-								<h3 className="text-lg font-bold"><strong>Title</strong>: {job.title}</h3>
-								<p className="text-gray-600"><strong>Location</strong>: {job.location}</p>
-								<p className="text-gray-500"><strong>Salary range</strong>: {job.salary_range}</p>
-								<p className="text-gray-700"><strong>Description</strong>: {job.description}</p>
-								<p className="text-gray-600"><strong>Requirements</strong>: {job.requirements}</p>
-								<p className="text-gray-600">{job.jJob_type}</p>
-							</div>
-						);
-					})}
-				</div>
-			)}
+  const handleViewDetails = (job) => {
+    setSelectedJob(job);
+    setIsDetailsModalOpen(true);
+  };
 
-			{showApplicationForm && (
-				<JobApplicationForm
-					jobId={selectedJobId}
-					onClose={() => {
-						setShowApplicationForm(false);
-						setSelectedJobId(null);
-					}}
-				/>
-			)}
-		</>
-	);
+  if (isLoading) {
+    return <p>Loading jobs...</p>;
+  }
+
+  if (jobs.length === 0) {
+    return <p>No jobs available at the moment.</p>;
+  }
+
+  return (
+    <div className="p-6 relative">
+      <h2 className="text-2xl font-bold mb-4">Available Jobs</h2>
+
+      <ToastContainer position="top-right" autoClose={3000} />
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {jobs.map((job) => (
+          <div
+            key={job.job_id}
+            className="bg-white shadow-lg rounded-lg p-4 cursor-pointer hover:shadow-xl transition"
+            onClick={() => handleViewDetails(job)} // Open job details modal on click
+          >
+            <h3 className="text-lg font-bold mb-2">{job.title}</h3>
+            <p className="text-gray-600 mb-1">
+              <strong>Location:</strong> {job.location}
+            </p>
+            <p className="text-gray-600 mb-1">
+              <strong>Salary Range:</strong> {job.salary_range || "N/A"}
+            </p>
+            <p className="text-gray-600 mb-1">
+              <strong>Job Type:</strong> {job.job_type || "N/A"}
+            </p>
+            <p className="text-gray-700 mb-4 line-clamp-2">
+              <strong>Description:</strong> {job.description}
+            </p>
+            <button
+              className={`px-4 py-2 rounded transition-all ${
+                appliedJobs.has(job.job_id)
+                  ? "bg-gray-400 text-white cursor-not-allowed"
+                  : "bg-blue-500 text-white hover:bg-blue-600"
+              }`}
+              onClick={(e) => {
+                e.stopPropagation(); // Prevent job details modal from opening when clicking Apply
+                handleApply(job);
+              }}
+              disabled={appliedJobs.has(job.job_id)}
+            >
+              {appliedJobs.has(job.job_id) ? "Applied" : "Apply Now"}
+            </button>
+          </div>
+        ))}
+      </div>
+
+      {/* Job Details Modal */}
+      {isDetailsModalOpen && selectedJob && (
+        <div className="fixed inset-0 flex items-center justify-center z-50">
+          <div className="fixed inset-0 bg-black opacity-50"></div>
+          <div className="bg-white p-6 rounded-lg shadow-xl max-w-md w-full relative z-10">
+            <button
+              className="absolute top-2 right-2 text-gray-500 hover:text-red-600 text-lg"
+              onClick={() => setIsDetailsModalOpen(false)}
+            >
+              ✖
+            </button>
+            <h2 className="text-2xl font-bold mb-4">{selectedJob.title}</h2>
+            <p className="text-gray-600 mb-2">
+              <strong>Location:</strong> {selectedJob.location}
+            </p>
+            <p className="text-gray-600 mb-2">
+              <strong>Salary Range:</strong> {selectedJob.salary_range || "N/A"}
+            </p>
+            <p className="text-gray-600 mb-2">
+              <strong>Job Type:</strong> {selectedJob.job_type || "N/A"}
+            </p>
+            <p className="text-gray-700 mb-4">
+              <strong>Description:</strong> {selectedJob.description}
+            </p>
+            <button
+              className={`w-full px-4 py-2 rounded transition-all ${
+                appliedJobs.has(selectedJob.job_id)
+                  ? "bg-gray-400 text-white cursor-not-allowed"
+                  : "bg-blue-500 text-white hover:bg-blue-600"
+              }`}
+              onClick={() => handleApply(selectedJob)}
+              disabled={appliedJobs.has(selectedJob.job_id)}
+            >
+              {appliedJobs.has(selectedJob.job_id) ? "Applied" : "Apply Now"}
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Apply Modal */}
+      {isModalOpen && (
+        <div className="fixed inset-0 flex items-center justify-center z-50">
+          <div className="fixed inset-0 bg-black opacity-50"></div>
+          <div className="bg-white p-6 rounded-lg shadow-xl max-w-md w-full relative z-10">
+            <button
+              className="absolute top-2 right-2 text-gray-500 hover:text-red-600 text-lg"
+              onClick={() => setIsModalOpen(false)}
+            >
+              ✖
+            </button>
+            <h2 className="text-2xl font-bold mb-4">Apply for {selectedJob.title}</h2>
+            <form onSubmit={handleSubmit}>
+              <div className="mb-4">
+                <label htmlFor="resume" className="block text-lg font-medium mb-2">
+                  Upload Resume
+                </label>
+                <input
+                  type="file"
+                  id="resume"
+                  accept=".pdf,.doc,.docx"
+                  onChange={(e) => setResume(e.target.files[0])}
+                  required
+                  className="border p-2 w-full"
+                />
+              </div>
+              <div className="mb-4">
+                <label htmlFor="coverLetter" className="block text-lg font-medium mb-2">
+                  Upload Cover Letter
+                </label>
+                <input
+                  type="file"
+                  id="coverLetter"
+                  accept=".pdf,.doc,.docx"
+                  onChange={(e) => setCoverLetter(e.target.files[0])}
+                  required
+                  className="border p-2 w-full"
+                />
+              </div>
+              <button type="submit" className="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600 transition-all">
+                Submit Application
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
+    </div>
+  );
 };
 
-export default JobList;
+export default AvailableJobs;
