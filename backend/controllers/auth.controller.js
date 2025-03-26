@@ -2,6 +2,7 @@ import db from "../config/db.config.js";
 import bcrypt from "bcryptjs";
 import { generateTokenAndSetCookie } from "../utils/tokenGenerator.js";
 import { ResetEmail } from "../utils/mailer.js";
+import jwt from "jsonwebtoken";
 
 
 //Registering a new user
@@ -49,36 +50,41 @@ export const register = async (req, res) => {
 };
 
 
-//Logging in a user
+//Login a user
 export const login = async (req, res) => {
     try {
-        const { email, password } = req.body; // getting the user details from the request body
+        const { email, password } = req.body; // Getting the user details from the request body
         if (!email || !password) {
             return res.status(400).json({ message: "Please enter both email and password" });
         }
 
-        // Getting the user details from the database
+        // Fetching the user details from the database
         const [row] = await db.query("SELECT * FROM users WHERE email = ?", [email]);
         if (!row.length) {
             return res.status(400).json({ message: "Invalid email or password" });
         }
+        
         const user = row[0];
+        console.log("User Data:", user); // Debugging
+        console.log("User Roles:", user.roles); // Debugging
 
-        // Comparing the password entered by the user with the hashed password stored in the database
+        // Compare passwords
         const isPasswordMatch = await bcrypt.compare(password, user.password);
-
         if (!isPasswordMatch) {
             return res.status(400).json({ message: "Invalid password" });
         }
 
-        // Generating a token for the logged-in user
-        generateTokenAndSetCookie(user.user_id, user.roles, res); // Include the user's role in the token
+        // Generate token using `user.user_id`
+        generateTokenAndSetCookie(user.user_id, user.roles, res);
+        
         res.status(200).json({ message: "User logged in successfully" });
     } catch (error) {
         console.log(`Error in logging in user: ${error}`);
         res.status(500).json({ message: "Error in logging in user" });
     }
 };
+
+
 
 
 //Logout a user

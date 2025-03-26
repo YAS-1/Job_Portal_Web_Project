@@ -44,10 +44,14 @@ export default function Login() {
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length === 0) {
-        console.log("Form Data Submitted:", formData);
         try {
             const response = await axios.post("http://localhost:3337/api/auth/login", formData, { withCredentials: true });
+            
+            // Save token to localStorage after successful login
+            localStorage.setItem("token", response.data.token);
             toast.success("Login successful");
+
+            // Navigate to home page
             navigate("/home");
         } catch (error) {
             if (error.response) {
@@ -60,6 +64,7 @@ export default function Login() {
         }
     }
 };
+
 
   return (
 

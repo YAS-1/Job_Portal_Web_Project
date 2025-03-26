@@ -2,7 +2,7 @@ import db from '../config/db.config.js'; // Adjust according to your project str
 
 // Create a new job listing
 export const createJob = async (req, res) => {
-  const { title, description, location, salary_range, jobType, requirements } = req.body;
+  const { title, description, location, salary_range, jobType, requirements, expiry_date } = req.body;
 
   // Validate required fields
   if (!title || !description || !location) {
@@ -12,10 +12,12 @@ export const createJob = async (req, res) => {
   try {
     const employer_id = req.user.userId; // Assuming `req.user` contains the authenticated employer's ID
 
+    console.log("Authenticated User:", req.user);
+
     // Insert the new job into the database
     const query = `
-      INSERT INTO jobs (title, description, location, salary_range, job_type, requirements, employer_id)
-      VALUES (?, ?, ?, ?, ?, ?, ?)
+      INSERT INTO jobs (title, description, location, salary_range, job_type, requirements, expiry_date, employer_id)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?)
     `;
     const values = [
       title,
@@ -24,6 +26,7 @@ export const createJob = async (req, res) => {
       salary_range || null,
       jobType || "Full-time",
       requirements || null,
+      expiry_date || null,
       employer_id,
     ];
 
@@ -35,6 +38,9 @@ export const createJob = async (req, res) => {
     res.status(500).json({ message: "Error creating job." });
   }
 };
+
+
+
 
 // Update an existing job listing
 export const updateJob = async (req, res) => {
@@ -213,6 +219,19 @@ export const searchJobs = async (req, res) => {
     res.status(200).json({ jobs });
   } catch (error) {
     console.error("Search Jobs Error:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+
+//Get jobs created by the logged in user
+export const myJobs = async (req, res) => {
+  try {
+    const user_id = req.user.userId;
+    const [jobs] = await db.query("SELECT * FROM jobs WHERE employer_id = ?", [user_id]);
+    res.status(200).json({ jobs });
+  } catch (error) {
+    console.error("Get Jobs Created by User Error:", error);
     res.status(500).json({ message: "Server error" });
   }
 };
