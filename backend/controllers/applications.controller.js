@@ -36,20 +36,42 @@ export const getJobApplications = async (req, res) => {
     const { job_id } = req.params;
     const employer_id = req.user.userId;
 
-    // Ensure the job belongs to the employer
-    const [job] = await db.query("SELECT * FROM jobs WHERE job_id = ? AND employer_id = ?", [job_id, employer_id]);
+    // Fetch job details created by the employer
+    const [job] = await db.query(
+      "SELECT * FROM jobs WHERE job_id = ? AND employer_id = ?",
+      [job_id, employer_id]
+    );
+
     if (job.length === 0) {
       return res.status(403).json({ message: "You do not have permission to view these applications." });
     }
 
-    const [applications] = await db.query("SELECT * FROM applications WHERE job_id = ?", [job_id]);
+    // Fetch applications for the job
+    const [applications] = await db.query(
+      `SELECT applications.*, jobs.title AS job_title, users.full_name AS applicant_name 
+       FROM applications
+       JOIN jobs ON applications.job_id = jobs.job_id
+       JOIN users ON applications.applicant_id = users.user_id
+       WHERE applications.job_id = ?`,
+      [job_id]
+    );
 
-    res.status(200).json(applications);
+    if (applications.length === 0) {
+      return res.status(404).json({ message: "No applications found for this job." });
+    }
+
+    // Return the job along with its applications
+    res.status(200).json({
+      job: job[0], // Return the job details
+      applications, // Return the applications
+    });
   } catch (error) {
     console.error("Get Applications Error:", error);
     res.status(500).json({ message: "Server error" });
   }
 };
+
+
 
 
 

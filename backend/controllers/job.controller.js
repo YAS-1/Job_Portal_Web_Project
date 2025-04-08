@@ -2,23 +2,45 @@ import db from '../config/db.config.js'; // Adjust according to your project str
 
 // Create a new job listing
 export const createJob = async (req, res) => {
+  const { title, description, location, salary_range, jobType, requirements, expiry_date } = req.body;
+
+  // Validate required fields
+  if (!title || !description || !location) {
+    return res.status(400).json({ message: "Title, description, and location are required." });
+  }
+
   try {
-    const { title, description, requirements, location, job_type, salary_range, expiry_date, status } = req.body;
-    const employer_id = req.user.userId; // Assuming you're using JWT authentication to get user info
+    const employer_id = req.user.userId; // Assuming `req.user` contains the authenticated employer's ID
 
-    // Insert the new job listing into the database
-    const [result] = await db.query(
-      `INSERT INTO jobs (title, description, requirements, location, job_type, salary_range, expiry_date, status, employer_id) 
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-      [title, description, requirements, location, job_type, salary_range, expiry_date, status, employer_id]
-    );
+    console.log("Authenticated User:", req.user);
 
-    res.status(201).json({ message: "Job created successfully!", job_id: result.insertId });
+    // Insert the new job into the database
+    const query = `
+      INSERT INTO jobs (title, description, location, salary_range, job_type, requirements, expiry_date, employer_id)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    `;
+    const values = [
+      title,
+      description,
+      location,
+      salary_range || null,
+      jobType || "Full-time",
+      requirements || null,
+      expiry_date || null,
+      employer_id,
+    ];
+
+    await db.query(query, values);
+
+    res.status(201).json({ message: "Job created successfully." });
   } catch (error) {
-    console.error("Create Job Error:", error);
-    res.status(500).json({ message: "Server error" });
+    console.error("Error creating job:", error);
+    res.status(500).json({ message: "Error creating job." });
   }
 };
+
+
+
 
 // Update an existing job listing
 export const updateJob = async (req, res) => {
@@ -197,6 +219,19 @@ export const searchJobs = async (req, res) => {
     res.status(200).json({ jobs });
   } catch (error) {
     console.error("Search Jobs Error:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+
+//Get jobs created by the logged in user
+export const myJobs = async (req, res) => {
+  try {
+    const user_id = req.user.userId;
+    const [jobs] = await db.query("SELECT * FROM jobs WHERE employer_id = ?", [user_id]);
+    res.status(200).json({ jobs });
+  } catch (error) {
+    console.error("Get Jobs Created by User Error:", error);
     res.status(500).json({ message: "Server error" });
   }
 };
