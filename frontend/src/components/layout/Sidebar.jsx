@@ -34,13 +34,6 @@ const Sidebar = () => {
 		{ icon: <FaHome />, label: "Home", path: "/home" },
 		{ icon: <FaUser />, label: "User Account", path: "/profile" },
 		{ icon: <FaBriefcase />, label: "Create Job", path: "/create-job" },
-		{
-			icon: <FaFileAlt />,
-			label: "Manage Applications",
-			path: "/manage-applications",
-		},
-		{ icon: <FaEdit />, label: "Update Job", path: "/update-job" },
-		{ icon: <FaTrash />, label: "Delete Job", path: "/delete-job" },
 	];
 
 	return (
